@@ -518,3 +518,4 @@ Invoke-Setup
 # TODO: Manual installation of M-Audio drivers (https://m-audio.com/support/download/drivers/m-track-solo-and-duo-windows-driver-v1.0.3).
 # TODO: Manual installation of Bias FX 2 (https://member.positivegrid.com/license).
 # TODO: Set PowerShell to launch with -nologo flag.
+# TODO: Set PowerShell profile.
