@@ -1,12 +1,3 @@
-Function IsAdmin {
-  Return New-Object System.Security.Principal.WindowsPrincipal([System.Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([System.Security.Principal.WindowsBuiltInRole]::Administrator)
-}
-
-If (IsAdmin) {
-  Write-Host "Script must be run in user mode, not administrator."
-  Exit 1;
-}
-
 $ScoopAppsToAdd = @(
   "extras/openrgb"
   "nerd-fonts/Cascadia-Code"
@@ -37,11 +28,10 @@ Function Install-ScoopApp {
 }
   
 Function Install-ScoopApps {
-  $ScoopAppsToAdd | Select-Object { $_.Split("/")[0] } | Get-Unique -AsString | ForEach-Object { Add-ScoopBucket $_ }
+  $buckets = $ScoopAppsToAdd | Select-Object { $_.Split("/")[0] } | Get-Unique -AsString
+  $buckets | ForEach-Object { Add-ScoopBucket $_ }
   $ScoopAppsToAdd | ForEach-Object { Install-ScoopApp $_ }
 }
 
 Install-Scoop
 Install-ScoopApps
-
-Start-Process "powershell.exe" -ArgumentList "-Path $PSScriptRoot/Install-AdminMode.ps1" -Verb "RunAs"
