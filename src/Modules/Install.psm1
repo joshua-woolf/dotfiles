@@ -1,5 +1,3 @@
-Import-Module .\Modules\Install.psm1
-
 Function Install-WindowsOptionalFeature {
   [CmdletBinding()]
   Param (
