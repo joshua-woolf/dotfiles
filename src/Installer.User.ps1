@@ -2,6 +2,9 @@ Import-Module .\Modules\Install.psm1
 
 $configuration = Get-Content "configuration.json" | ConvertFrom-Json
 
+Test-Configuration -Name "Applications.Git.Email" -Value $configuration.Applications.Git.Email
+Test-Configuration -Name "Applications.Git.User" -Value $configuration.Applications.Git.User
+
 Write-InstallLog "Installing Scoop..."
 
 Invoke-RestMethod "get.scoop.sh" | Invoke-Expression

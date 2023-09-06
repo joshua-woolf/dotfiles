@@ -55,6 +55,20 @@ Function Set-RegistryValue {
   Set-ItemProperty -Path $Path -Name $Name -Value $Value -Force
 }
 
+Function Test-Configuration {
+  [CmdletBinding()]
+  Param (
+    [Parameter(Mandatory = $true)] [string] $Name,
+    [Parameter(Mandatory = $false)] [string] $Value
+  )
+
+  If (($null -eq $Value) -or ("" -eq $Value))
+  {
+    Write-Error "The configuration value $($Name) has not been configured. Please update configuration and rerun."
+    Exit 1
+  }
+}
+
 Function Uninstall-AllWindowsOptionalFeatures {
   Get-WindowsOptionalFeature -Online `
   | Where-Object { $_.State -eq "Enabled" } `

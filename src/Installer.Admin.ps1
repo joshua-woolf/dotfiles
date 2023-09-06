@@ -3,6 +3,8 @@ Import-Module .\Modules\WindowsConfiguration.psm1
 
 $configuration = Get-Content "configuration.json" | ConvertFrom-Json
 
+Test-Configuration -Name "ComputerName" -Value $configuration.ComputerName
+
 Write-InstallLog "Adding NuGet package provider..."
 
 Get-PackageProvider NuGet -Force
