@@ -73,5 +73,3 @@ $configuration.RemoveWinGetApplications | ForEach-Object { Uninstall-WinGetAppli
 Write-InstallLog "Installing WinGet applications..."
 
 $configuration.AddWinGetApplications.Admin | ForEach-Object { Install-WinGetApplication -Id "$($_.Id)" -Override "$($_.Override)" }
-Write-InstallLog "Setting Docker configuration..."
-
