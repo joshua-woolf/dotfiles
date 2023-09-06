@@ -95,7 +95,7 @@ Function Write-InstallLog {
     [Parameter(Mandatory = $true)] [string] $Message
   )
 
-  Write-Host $Message -ForegroundColor "Magenta"
+  Write-Host $Message -BackgroundColor "Magenta" -ForegroundColor "Black"
 }
 
 Export-ModuleMember -Function *
