@@ -11,19 +11,18 @@ Invoke-RestMethod "get.scoop.sh" | Invoke-Expression
 
 Write-InstallLog "Installing Scoop applications..."
 
-$scoopBuckets = $configuration.AddScoopApplications | Select-Object { $_.Split("/")[0] } | Get-Unique -AsString
+$scoopBuckets = @()
 
-$scoopBuckets | ForEach-Object { scoop bucket add "$($_)" }
+$configuration.AddScoopApplications | ForEach-Object { $ScoopBuckets += $_.Split("/")[0] }
+
+$scoopBuckets | Get-Unique -AsString | ForEach-Object { scoop bucket add "$($_)" }
 
 $configuration.AddScoopApplications | ForEach-Object { scoop install "$($_)" }
 
 Write-InstallLog "Installing WinGet applications..."
 
 $configuration.AddWinGetApplications.User | ForEach-Object { Install-WinGetApplication -Id "$($_.Id)" -Override "$($_.Override)" }
-Write-InstallLog "Setting Docker configuration..."
 
-$dockerCniConfigurationPath = "$($env:USERPROFILE)/AppData/Roaming/Docker/cni/10-default.conflist"
-(Get-Content $dockerCniConfigurationPath).Replace("10.1.0.", "172.1.0.") | Out-File $dockerCniConfigurationPath
 
 Write-InstallLog "Setting Git configuration..."
 

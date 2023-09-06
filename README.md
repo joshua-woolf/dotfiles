@@ -16,6 +16,7 @@ The scripts should then be run in the following order:
    1. `ComputerName`
 1. `Installer.Admin.ps1` should be run as administrator.
 1. `Installer.User.ps1` should be run as user.
+1. `Installer.Docker.ps1` should be run as user after the first successful launch of Docker Desktop.
 
 Thereafter some manual installations are done:
 
@@ -35,3 +36,4 @@ A few tasks still need to be automated:
   - Visual Studio Code
 - Set Windows Terminal configuration.
 - Set up Windows Subsystem for Linux distribution.
+- Set up NVIDIA Control Panel color settings.
