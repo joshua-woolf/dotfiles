@@ -1,7 +1,7 @@
 Import-Module .\Modules\Install.psm1
 Import-Module .\Modules\WindowsConfiguration.psm1
 
-$configuration = Get-Content "configuration.json" | ConvertFrom-Json -AsHashTable
+$configuration = Get-Content "configuration.json" | ConvertFrom-Json
 
 Write-InstallLog "Adding NuGet package provider..."
 

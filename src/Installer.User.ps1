@@ -1,6 +1,6 @@
 Import-Module .\Modules\Install.psm1
 
-$configuration = Get-Content "configuration.json" | ConvertFrom-Json -AsHashTable
+$configuration = Get-Content "configuration.json" | ConvertFrom-Json
 
 Write-InstallLog "Installing Scoop..."
 
