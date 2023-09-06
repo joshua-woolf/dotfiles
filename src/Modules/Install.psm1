@@ -45,7 +45,7 @@ Function Set-RegistryValue {
   Param (
     [Parameter(Mandatory = $true)] [string] $Path,
     [Parameter(Mandatory = $true)] [string] $Name,
-    [Parameter(Mandatory = $true)] [string] $Value
+    [Parameter(Mandatory = $true)] [AllowEmptyString()] [string] $Value
   )
 
   If (-not (Test-Path $Path)) {

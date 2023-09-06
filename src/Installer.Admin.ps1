@@ -70,23 +70,6 @@ $configuration.RemoveWinGetApplications | ForEach-Object { Uninstall-WinGetAppli
 
 Write-InstallLog "Installing WinGet applications..."
 
-$configuration.AddWinGetApplications | ForEach-Object { Install-WinGetApplication -Id "$($_.Id)" -Override "$($_.Override)" }
-
+$configuration.AddWinGetApplications.Admin | ForEach-Object { Install-WinGetApplication -Id "$($_.Id)" -Override "$($_.Override)" }
 Write-InstallLog "Setting Docker configuration..."
 
-$dockerCniConfigurationPath = "$($env:USERPROFILE)/AppData/Roaming/Docker/cni/10-default.conflist"
-(Get-Content $condockerCniConfigurationPathigPath).Replace("10.1.0.", "172.1.0.") | Out-File $dockerCniConfigurationPath
-
-Write-InstallLog "Setting Git configuration..."
-
-git config --global init.defaultBranch $configuration.Applications.Git.DefaultBranch
-git config --global user.email $configuration.Applications.Git.Email
-git config --global user.name $configuration.Applications.Git.Name
-
-Write-InstallLog "Setting Windows Subsystem for Linux configuration..."
-
-@"
-[wsl2]
-memory=$($configuration.Applications.WindowsSubsystemForLinux.MemoryLimit)GB
-processors=$($configuration.Applications.WindowsSubsystemForLinux.CpuLimit)
-"@ | Out-File "$($env:USERPROFILE)/.wslconfig"

@@ -5,7 +5,8 @@
     "nerd-fonts/CascadiaCode-NF",
     "nerd-fonts/CascadiaCode-NF-Mono"
   ],
-  "AddWinGetApplications": [
+  "AddWinGetApplications": {
+    "Admin": [
     {
       "Description": "SysInternals Suite",
       "Id": "9P7KNL5RWT25"
@@ -58,9 +59,6 @@
     },
     {
       "Id": "GitHub.GitHubDesktop"
-    },
-    {
-      "Id": "Google.Chrome"
     },
     {
       "Id": "Google.GoogleDrive"
@@ -149,15 +147,21 @@
       "Id": "qBittorrent.qBittorrent"
     },
     {
-      "Id": "Spotify.Spotify"
-    },
-    {
       "Id": "SteelSeries.GG"
     },
     {
       "Id": "VideoLAN.VLC"
     }
   ],
+  "User": [
+    {
+      "Id": "Google.Chrome"
+    },
+    {
+      "Id": "Spotify.Spotify"
+    }
+  ]
+},
   "AddWindowsOptionalFeatures": [
     "Microsoft-Hyper-V-All",
     "VirtualMachinePlatform",
