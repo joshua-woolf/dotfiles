@@ -4,7 +4,7 @@ Function Install-WindowsOptionalFeature {
     [Parameter(Mandatory = $true)] [string] $FeatureName
   )
 
-  Enable-WindowsOptionalFeature -Online -FeatureName $FeatureName -All -NoRestart
+  Enable-WindowsOptionalFeature -Online -FeatureName $FeatureName -All -NoRestart | Out-Null
 }
 
 Function Install-WinGetApplication {
@@ -58,7 +58,7 @@ Function Set-RegistryValue {
 Function Uninstall-AllWindowsOptionalFeatures {
   Get-WindowsOptionalFeature -Online `
   | Where-Object { $_.State -eq "Enabled" } `
-  | ForEach-Object { Disable-WindowsOptionalFeature -Online -FeatureName $_.FeatureName -NoRestart -WarningAction SilentlyContinue }
+  | ForEach-Object { Disable-WindowsOptionalFeature -Online -FeatureName $_.FeatureName -NoRestart -WarningAction SilentlyContinue | Out-Null }
 }
 
 Function Uninstall-WindowsApplication {
