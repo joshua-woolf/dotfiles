@@ -7,7 +7,12 @@ Test-Configuration -Name "Applications.Git.User" -Value $configuration.Applicati
 
 Write-InstallLog "Installing Scoop..."
 
-Invoke-RestMethod "get.scoop.sh" | Invoke-Expression
+If ($null -eq (Which "scoop")) {
+  Invoke-RestMethod "get.scoop.sh" | Invoke-Expression
+}
+else {
+  scoop update
+}
 
 Write-InstallLog "Installing Scoop applications..."
 

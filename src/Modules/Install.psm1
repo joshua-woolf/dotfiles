@@ -103,6 +103,15 @@ Function Uninstall-WinGetApplication {
   winget uninstall --accept-source-agreements --exact --id "$Id"
 }
 
+Function Which {
+  [CmdletBinding()]
+  Param (
+    [Parameter(Position = 0, Mandatory = $true, ValueFromPipeline = $true)] [string] $Name
+  )
+
+  (Get-Command $Name -ErrorAction SilentlyContinue).Definition
+}
+
 Function Write-InstallLog {
   [CmdletBinding()]
   param (
