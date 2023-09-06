@@ -74,6 +74,15 @@ Function Version {
   Write-Host "$($osInfo.Caption) ($($osInfo.Version))"
 }
 
+Function Which {
+  [CmdletBinding()]
+  Param (
+    [Parameter(Position = 0, Mandatory = $true, ValueFromPipeline = $true)] [string] $Name
+  )
+
+  (Get-Command $Name -ErrorAction SilentlyContinue).Definition
+}
+
 oh-my-posh init pwsh --config "https://raw.githubusercontent.com/joshua-woolf/omp-themes/main/grape.omp.json" | Invoke-Expression
 
 Clear-Host
