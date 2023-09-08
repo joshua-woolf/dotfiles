@@ -1,6 +1,7 @@
 {
   "AddScoopApplications": [
     "extras/openrgb",
+    "main/k3d",
     "nerd-fonts/Cascadia-Code",
     "nerd-fonts/CascadiaCode-NF",
     "nerd-fonts/CascadiaCode-NF-Mono"
