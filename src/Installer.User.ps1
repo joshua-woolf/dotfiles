@@ -3,7 +3,7 @@ Import-Module $PSScriptRoot\Modules\Install.psm1
 $configuration = Get-Content "configuration.json" | ConvertFrom-Json
 
 Test-Configuration -Name "Applications.Git.Email" -Value $configuration.Applications.Git.Email
-Test-Configuration -Name "Applications.Git.User" -Value $configuration.Applications.Git.User
+Test-Configuration -Name "Applications.Git.Name" -Value $configuration.Applications.Git.Name
 
 Write-InstallLog "Installing Scoop..."
 
