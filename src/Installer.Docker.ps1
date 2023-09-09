@@ -1,4 +1,4 @@
-Import-Module .\Modules\Install.psm1
+Import-Module $PSScriptRoot\Modules\Install.psm1
 
 Write-InstallLog "Setting Docker configuration..."
 

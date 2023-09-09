@@ -1,4 +1,4 @@
-Import-Module .\Install.psm1
+Import-Module $PSScriptRoot\Install.psm1
 
 Function Enable-AllDiskCleanupOptions {
   Write-InstallLog "Enabling all Disk Cleanup options..."

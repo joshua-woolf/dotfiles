@@ -40,6 +40,11 @@ Function Invoke-WindowsUpdates {
   Install-WindowsUpdate -AcceptAll -IgnoreReboot -IgnoreUserInput
 }
 
+Function Remove-DesktopShortcuts {
+  Remove-Item "C:\Users\$($env:USERNAME)\OneDrive\Desktop\*.lnk" -Force -Verbose
+  Remove-Item "C:\Users\Public\Desktop\*.lnk" -Force -Verbose
+}
+
 Function Set-RegistryValue {
   [CmdletBinding()]
   Param (

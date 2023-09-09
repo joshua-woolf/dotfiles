@@ -1,5 +1,5 @@
-Import-Module .\Modules\Install.psm1
-Import-Module .\Modules\WindowsConfiguration.psm1
+Import-Module $PSScriptRoot\Modules\Install.psm1
+Import-Module $PSScriptRoot\Modules\WindowsConfiguration.psm1
 
 $configuration = Get-Content "configuration.json" | ConvertFrom-Json
 
@@ -73,3 +73,7 @@ $configuration.RemoveWinGetApplications | ForEach-Object { Uninstall-WinGetAppli
 Write-InstallLog "Installing WinGet applications..."
 
 $configuration.AddWinGetApplications.Admin | ForEach-Object { Install-WinGetApplication -Id "$($_.Id)" -Override "$($_.Override)" }
+
+Write-InstallLog "Removing desktop shortcuts..."
+
+Remove-DesktopShortcuts
