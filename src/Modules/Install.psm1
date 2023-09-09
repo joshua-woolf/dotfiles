@@ -41,8 +41,8 @@ Function Invoke-WindowsUpdates {
 }
 
 Function Remove-DesktopShortcuts {
-  Remove-Item "C:\Users\$($env:USERNAME)\OneDrive\Desktop\*.lnk" -Force -Verbose
-  Remove-Item "C:\Users\Public\Desktop\*.lnk" -Force -Verbose
+  Remove-Item "C:\Users\$($env:USERNAME)\OneDrive\Desktop\*.lnk" -Force
+  Remove-Item "C:\Users\Public\Desktop\*.lnk" -Force
 }
 
 Function Set-RegistryValue {
