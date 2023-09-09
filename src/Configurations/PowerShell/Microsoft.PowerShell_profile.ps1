@@ -1,8 +1,17 @@
-Function Cleanup {
-  # Empty Recycle Bin
-    (New-Object -ComObject Shell.Application).Namespace(0xA).Items() | ForEach-Object { Remove-Item $_.Path -Recurse -Confirm:$false }
+Function Write-CustomLog {
+  [CmdletBinding()]
+  param (
+    [Parameter(Mandatory = $true)] [string] $Message
+  )
 
-  # Run Disk Cleanup
+  Write-Host $Message -BackgroundColor "Cyan" -ForegroundColor "Black"
+}
+
+Function Cleanup {
+  Write-CustomLog "Emptying recycle bin..."
+  (New-Object -ComObject Shell.Application).Namespace(0xA).Items() | ForEach-Object { Remove-Item $_.Path -Recurse -Confirm:$false }
+
+  Write-CustomLog "Running disk cleanup..."
   Sudo "$(Join-Path $env:SystemRoot 'system32\cleanmgr.exe')" "/sagerun:6174"
 }
 
@@ -56,17 +65,19 @@ Function Sudo {
 }
 
 Function Update {
+  Write-CustomLog "Updating Microsoft Store applications..."
+  Get-CimInstance -Namespace "Root\cimv2\mdm\dmmap" -ClassName "MDM_EnterpriseModernAppManagement_AppManagement01" | Invoke-CimMethod -MethodName UpdateScanMethod
+
+  Write-CustomLog "Updating WinGet applications..."
+  winget upgrade --all --accept-package-agreements --accept-source-agreements
+
+  Write-CustomLog "Updating PowerShell modules..."
   Update-Module
 
   Import-Module PSWindowsUpdate
 
+  Write-CustomLog "Installing Windows updates..."
   Install-WindowsUpdate -AcceptAll -IgnoreReboot -IgnoreUserInput
-
-  winget upgrade --all --accept-package-agreements --accept-source-agreements
-
-  Get-CimInstance -Namespace "Root\cimv2\mdm\dmmap" -ClassName "MDM_EnterpriseModernAppManagement_AppManagement01" | Invoke-CimMethod -MethodName UpdateScanMethod
-
-  # & "C:\Program Files\Common Files\microsoft shared\ClickToRun\OfficeC2RClient.exe" /update user displaylevel=false forceappshutdown=true
 }
 
 Function Version {

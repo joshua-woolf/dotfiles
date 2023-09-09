@@ -42,3 +42,8 @@ Write-InstallLog "Setting Windows Subsystem for Linux configuration..."
 memory=$($configuration.Applications.WindowsSubsystemForLinux.MemoryLimit)GB
 processors=$($configuration.Applications.WindowsSubsystemForLinux.CpuLimit)
 "@ | Out-File "$($env:USERPROFILE)/.wslconfig"
+
+Write-InstallLog "Setting PowerShell profile configuration..."
+
+Copy-Item -Path "$PSScriptRoot\Configurations\PowerShell\Microsoft.PowerShell_profile.ps1" -Destination "C:\Users\$($env:USERNAME)\OneDrive\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" -Force
+Copy-Item -Path "$PSScriptRoot\Configurations\PowerShell\Microsoft.PowerShell_profile.ps1" -Destination "C:\Users\$($env:USERNAME)\OneDrive\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1" -Force
