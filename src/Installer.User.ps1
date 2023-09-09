@@ -45,5 +45,5 @@ processors=$($configuration.Applications.WindowsSubsystemForLinux.CpuLimit)
 
 Write-InstallLog "Setting PowerShell profile configuration..."
 
-Copy-Item -Path "$PSScriptRoot\Configurations\PowerShell\Microsoft.PowerShell_profile.ps1" -Destination "C:\Users\$($env:USERNAME)\OneDrive\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" -Force
-Copy-Item -Path "$PSScriptRoot\Configurations\PowerShell\Microsoft.PowerShell_profile.ps1" -Destination "C:\Users\$($env:USERNAME)\OneDrive\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1" -Force
+Copy-Item -Path "$PSScriptRoot\Configurations\PowerShell" -Destination "C:\Users\$($env:USERNAME)\OneDrive\Documents\PowerShell" -Recurse -Force
+Copy-Item -Path "$PSScriptRoot\Configurations\PowerShell" -Destination "C:\Users\$($env:USERNAME)\OneDrive\Documents\WindowsPowerShell" -Recurse -Force

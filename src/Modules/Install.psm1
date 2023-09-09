@@ -46,8 +46,7 @@ Function Remove-DesktopShortcuts {
 }
 
 Function Set-NvidiaControlPanelConfiguration {
-  Copy-Item -Path "$PSScriptRoot\..\Configurations\NvidiaControlPanel\nvdrsdb0.bin" -Destination "C:\ProgramData\NVIDIA Corporation\Drs\nvdrsdb0.bin" -Force
-  Copy-Item -Path "$PSScriptRoot\..\Configurations\NvidiaControlPanel\nvdrsdb1.bin" -Destination "C:\ProgramData\NVIDIA Corporation\Drs\nvdrsdb1.bin" -Force1
+  Copy-Item -Path "$PSScriptRoot\..\Configurations\NvidiaControlPanel" -Destination "C:\ProgramData\NVIDIA Corporation\Drs" -Recurse -Force
 }
 
 Function Set-RegistryValue {
