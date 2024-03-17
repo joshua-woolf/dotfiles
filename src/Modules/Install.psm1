@@ -45,10 +45,6 @@ Function Remove-DesktopShortcuts {
   Remove-Item "C:\Users\Public\Desktop\*.lnk" -Force
 }
 
-Function Set-NvidiaControlPanelConfiguration {
-  Copy-Item -Path "$PSScriptRoot\..\Configurations\NvidiaControlPanel" -Destination "C:\ProgramData\NVIDIA Corporation\Drs" -Recurse -Force
-}
-
 Function Set-RegistryValue {
   [CmdletBinding()]
   Param (

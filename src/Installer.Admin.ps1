@@ -77,7 +77,3 @@ $configuration.AddWinGetApplications.Admin | ForEach-Object { Install-WinGetAppl
 Write-InstallLog "Removing desktop shortcuts..."
 
 Remove-DesktopShortcuts
-
-Write-InstallLog "Setting Nvidia Control Panel configuration..."
-
-Set-NvidiaControlPanelConfiguration
