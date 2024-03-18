@@ -44,4 +44,6 @@ function Invoke-Starship-PreCommand {
 
 Invoke-Expression (&starship init powershell)
 
+Set-PSReadLineOption -PredictionViewStyle "ListView"
+
 $prompt = ""
