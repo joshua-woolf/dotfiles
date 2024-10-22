@@ -16,7 +16,7 @@ config.default_prog = { 'pwsh.exe', '-NoLogo', }
 
 config.disable_default_key_bindings = true
 
-config.font = wezterm.font 'CaskaydiaCove NF'
+config.font = wezterm.font 'Cascadia Code NF'
 
 config.font_size = 14
 
