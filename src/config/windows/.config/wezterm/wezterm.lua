@@ -5,12 +5,7 @@ config.adjust_window_size_when_changing_font_size = false
 
 config.audible_bell = 'Disabled'
 
--- config.color_scheme = 'Rosé Pine (Gogh)'
--- config.color_scheme = 'Wryan (Gogh)'
-
 config.command_palette_bg_color = '#0000FF'
-
--- config.default_cwd = 'C:'
 
 config.default_prog = { 'pwsh.exe', '-NoLogo', }
 
