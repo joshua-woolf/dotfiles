@@ -1,10 +1,15 @@
-- Set Windows Settings
-- Remove Default Applications
-- Remove Default Optional Capabilities
-- Install Applications from Store
-  - [iCloud](https://www.microsoft.com/store/productId/9PKTQ5699M62)
-  - [Ubuntu](https://www.microsoft.com/store/productId/9PDXGNCFSCZV)
-- Install Applications via WinGet
+## Set Windows Settings
+
+## Remove Default Applications
+
+## Remove Default Optional Capabilities
+
+## Install Applications from Store
+
+- [iCloud](https://www.microsoft.com/store/productId/9PKTQ5699M62)
+- [Ubuntu](https://www.microsoft.com/store/productId/9PDXGNCFSCZV)
+
+## Install Applications via WinGet
 
 ```powershell
 winget install --accept-package-agreements --accept-source-agreements --exact --id "7zip.7zip"
@@ -46,15 +51,18 @@ winget install --accept-package-agreements --accept-source-agreements --exact --
 winget install --accept-package-agreements --accept-source-agreements --exact --id "Spotify.Spotify"
 winget install --accept-package-agreements --accept-source-agreements --exact --id "Starship.Starship"
 winget install --accept-package-agreements --accept-source-agreements --exact --id "VideoLAN.VLC"
+winget install --accept-package-agreements --accept-source-agreements --exact --id "wez.wezterm"
 winget install --accept-package-agreements --accept-source-agreements --exact --id "WinMerge.WinMerge"
 ```
 
-- Install Applications Manually
-  - [Bias FX 2](https://member.positivegrid.com/license)
-  - [Cascadia Code Font](https://github.com/microsoft/cascadia-code/releases)
-  - [Git](https://git-scm.com/)
-  - [M-Audio M-Track Solo Driver](https://m-audio.com/support/download/drivers/m-track-solo-and-duo-windows-driver-v1.0.3)
-  - [Nvidia Drivers](https://www.nvidia.com/en-us/drivers/)
-  - [OpenRGB](https://openrgb.org/)
-  - [Visual Studio Community 2022](https://visualstudio.microsoft.com/vs/community/)
-- Setup Configuration
+## Install Applications Manually
+
+- [Bias FX 2](https://member.positivegrid.com/license)
+- [Cascadia Code Font](https://github.com/microsoft/cascadia-code/releases)
+- [Git](https://git-scm.com/)
+- [M-Audio M-Track Solo Driver](https://m-audio.com/support/download/drivers/m-track-solo-and-duo-windows-driver-v1.0.3)
+- [Nvidia Drivers](https://www.nvidia.com/en-us/drivers/)
+- [OpenRGB](https://openrgb.org/)
+- [Visual Studio Community 2022](https://visualstudio.microsoft.com/vs/community/)
+
+## Setup Configuration
