@@ -47,3 +47,5 @@ Invoke-Expression (&starship init powershell)
 Set-PSReadLineOption -PredictionViewStyle "ListView"
 
 $prompt = ""
+
+Clear-Host
