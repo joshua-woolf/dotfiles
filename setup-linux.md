@@ -8,7 +8,9 @@ sudo apt-get update \
 sudo apt-get install -y \
   apt-transport-https \
   build-essential \
+  curl \
   dnsutils \
+  dotnet-sdk-8.0 \
   gnupg2 \
   net-tools \
   unzip
@@ -21,7 +23,6 @@ brew install \
   awscli \
   azcopy \
   azure-cli \
-  dotnet \
   gcc \
   go \
   helm \
