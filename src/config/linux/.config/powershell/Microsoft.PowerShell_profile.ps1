@@ -38,3 +38,5 @@ function Invoke-Starship-PreCommand {
 Invoke-Expression (&starship init powershell)
 
 $prompt = ""
+
+Clear-Host
