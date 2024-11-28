@@ -7,7 +7,7 @@ function kubeconfig {
 }
 
 function update {
-  brew update && brew upgrade
+  brew update && brew upgrade --greedy
 }
 
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
