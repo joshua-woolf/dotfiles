@@ -1,3 +1,7 @@
+function home {
+  code $HOME
+}
+
 function hosts {
   code "/etc/hosts"
 }
