@@ -13,5 +13,9 @@ https://github.com/StevenBlack/hosts
 ```
 
 ```bash
-brew bundle --file ./src/config/macos/Brewfile
+brew bundle --file ./Brewfile
+```
+
+```bash
+npm install -g @anthropic-ai/claude-code ccusage npm
 ```
