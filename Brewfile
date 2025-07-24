@@ -71,4 +71,3 @@ cask "wezterm"
 cask "whatsapp"
 mas "Save to Raindrop.io", id: 1549370672
 mas "Xcode", id: 497799835
-
