@@ -1,7 +1,0 @@
-[core]
-	editor = \"C:\\Users\\joshu\\AppData\\Local\\Programs\\Microsoft VS Code\\bin\\code\" --wait
-[init]
-  defaultBranch = main
-[user]
-	name = Joshua Woolf
-	email = joshuawoolf87@gmail.com
