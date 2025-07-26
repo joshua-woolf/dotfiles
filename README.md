@@ -6,9 +6,26 @@ https://www.privacyguides.org/en/os/macos-overview/
 
 https://github.com/StevenBlack/hosts
 
+## Prerequisites
+
+```bash
+chmod +x *.sh
+```
+
 ## Install Applications
 
 ```bash
-chmod +x setup.sh
 ./setup.sh
+```
+
+## Install Configurations
+
+```bash
+./install-config.sh
+```
+
+## Uninstall Configurations
+
+```bash
+./uninstall-config.sh
 ```
