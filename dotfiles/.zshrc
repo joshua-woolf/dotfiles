@@ -37,7 +37,7 @@ alias fgrep='fgrep --color=auto'
 alias flush="dscacheutil -flushcache && killall -HUP mDNSResponder"
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias k="kubectl"
-alias ls="command lsF -G"
+alias ls="command ls -F -G"
 alias ll="ls -alF -G"
 alias repos='cd ~/GitHub'
 alias path='echo -e ${PATH//:/\\n}'
