@@ -25,3 +25,9 @@ chmod +x *.sh
 ```bash
 ./uninstall-config.sh
 ```
+
+## Update Brewfile
+
+```bash
+brew bundle dump --file=Brewfile
+```
