@@ -1,4 +1,5 @@
 export HOMEBREW_NO_ANALYTICS=1
+export PATH="/Users/joshuaw/.rd/bin:$PATH"
 
 HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
 SAVEHIST=8192
@@ -16,7 +17,6 @@ setopt NO_CASE_GLOB
 zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
 zstyle ':completion:*' list-suffixeszstyle ':completion:*' expand prefix suffix
 
-fpath=(/Users/joshuaw/.docker/completions $fpath)
 
 autoload -Uz compinit
 compinit

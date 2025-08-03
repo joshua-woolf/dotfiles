@@ -1,8 +1,16 @@
 #!/usr/bin/env bash
 
+## Install Rosetta
+
+sudo softwareupdate --install-rosetta
+
 ## Install Homebrew
 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/joshuaw/.zprofile
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 ## Install Apps
 
@@ -23,10 +31,11 @@ dockutil --no-restart --add "/Applications/Claude.app"
 dockutil --no-restart --add "/Applications/Visual Studio Code.app"
 dockutil --no-restart --add "/Applications/Rider.app"
 dockutil --no-restart --add "/Applications/GitHub Desktop.app"
-dockutil --no-restart --add "/Applications/Docker.app/Contents/MacOS/Docker Desktop.app"
+dockutil --no-restart --add "/Applications/Rancher Desktop.app"
 dockutil --no-restart --add "/Applications/WezTerm.app"
 dockutil --no-restart --add "/Applications/Discord.app"
 dockutil --no-restart --add "/Applications/WhatsApp.app"
+dockutil --no-restart --add "/Applications/Spotify.app"
 dockutil --no-restart --add "/Users/joshuaw/GitHub/" --section others
 dockutil --no-restart --add "/Users/joshuaw/Downloads/" --section others
 
