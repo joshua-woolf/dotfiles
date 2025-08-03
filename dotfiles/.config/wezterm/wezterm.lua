@@ -35,6 +35,7 @@ config.keys = {
   { action = wezterm.action.ActivateTabRelative(-1),                          key = '[',          mods = 'CMD', },
   { action = wezterm.action.ActivateTabRelative(1),                           key = ']',          mods = 'CMD', },
   { action = wezterm.action.CloseCurrentPane { confirm = false },             key = 'w',          mods = 'CMD', },
+  { action = wezterm.action.CloseCurrentTab { confirm = false },              key = 'q',          mods = 'CMD', },
   { action = wezterm.action.CopyTo 'Clipboard',                               key = 'C',          mods = 'CMD|SHIFT', },
   { action = wezterm.action.DecreaseFontSize,                                 key = '-',          mods = 'CMD', },
   { action = wezterm.action.IncreaseFontSize,                                 key = '=',          mods = 'CMD', },
