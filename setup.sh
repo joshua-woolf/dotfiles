@@ -49,12 +49,8 @@ killall Dock
 
 ## Update Hosts File
 
-cd "$REPOS_DIR" || exit 1
+curl -fsSL https://raw.githubusercontent.com/StevenBlack/hosts/refs/heads/master/hosts -o /tmp/hosts_new
 
-git clone https://github.com/StevenBlack/hosts.git "$REPOS_DIR/hosts" --depth 1
+sudo cp /tmp/hosts_new /etc/hosts
 
-cd hosts
-
-pip3 install --user -r requirements.txt # errors currently
-
-python3 testUpdateHostsFile.py
+rm /tmp/hosts_new
