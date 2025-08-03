@@ -20,6 +20,12 @@ brew bundle --file ./Brewfile
 
 npm install -g @anthropic-ai/claude-code ccusage npm
 
+## Setup GitHub Directory
+
+REPOS_DIR="$HOME/GitHub"
+
+mkdir -p "$REPOS_DIR"
+
 ## Setup Dock
 
 dockutil --no-restart --remove all
@@ -42,10 +48,6 @@ dockutil --no-restart --add "/Users/joshuaw/Downloads/" --section others
 killall Dock
 
 ## Update Hosts File
-
-REPOS_DIR="$HOME/GitHub"
-
-mkdir -p "$REPOS_DIR"
 
 cd "$REPOS_DIR" || exit 1
 
