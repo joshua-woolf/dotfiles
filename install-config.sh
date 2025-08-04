@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-stow -d dotfiles -t "$HOME" . --adopt
+stow -d dotfiles -t "$HOME" .
