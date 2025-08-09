@@ -45,6 +45,14 @@ alias path='echo -e ${PATH//:/\\n}'
 alias sudo='sudo '
 alias update='sudo softwareupdate -i -a; brew update && brew upgrade --greedy && brew cleanup; npm install npm -g; npm update -g'
 
+function nr {
+  repos
+  mkdir -p "$1"
+  cd "$1"
+  git init
+  code .
+}
+
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
