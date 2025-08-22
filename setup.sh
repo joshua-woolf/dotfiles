@@ -47,6 +47,12 @@ dockutil --no-restart --add "/Users/joshuaw/Downloads/" --section others
 
 killall Dock
 
+## Setup OS Configuration
+
+defaults write com.apple.finder AppleShowAllFiles -bool true
+
+killall Finder
+
 ## Update Hosts File
 
 curl -fsSL https://raw.githubusercontent.com/StevenBlack/hosts/refs/heads/master/hosts -o /tmp/hosts_new
