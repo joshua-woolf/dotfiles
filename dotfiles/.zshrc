@@ -17,7 +17,6 @@ setopt NO_CASE_GLOB
 zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
 zstyle ':completion:*' list-suffixeszstyle ':completion:*' expand prefix suffix
 
-
 autoload -Uz compinit
 compinit
 
