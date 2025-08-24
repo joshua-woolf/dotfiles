@@ -8,9 +8,9 @@ mkdir -p "$REPOS_DIR"
 
 cd "$REPOS_DIR" || exit
 
-git clone https://github.com/joshua-woolf/config.git
+git clone https://github.com/joshua-woolf/dotfiles.git
 
-cd config || exit
+cd dotfiles || exit
 
 stow -d dotfiles -t "$HOME" .
 
