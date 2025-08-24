@@ -1,5 +1,19 @@
 #!/usr/bin/env bash
 
+## Setup GitHub Directory
+
+REPOS_DIR="$HOME/GitHub"
+
+mkdir -p "$REPOS_DIR"
+
+cd "$REPOS_DIR" || exit
+
+git clone https://github.com/joshua-woolf/config.git
+
+cd config || exit
+
+stow -d dotfiles -t "$HOME" .
+
 ## Install Rosetta
 
 sudo softwareupdate --install-rosetta
@@ -15,16 +29,6 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 ## Install Apps
 
 brew bundle --file ./Brewfile
-
-## Install Claude Code
-
-npm install -g @anthropic-ai/claude-code ccusage npm
-
-## Setup GitHub Directory
-
-REPOS_DIR="$HOME/GitHub"
-
-mkdir -p "$REPOS_DIR"
 
 ## Setup Dock
 
@@ -60,3 +64,7 @@ curl -fsSL https://raw.githubusercontent.com/StevenBlack/hosts/refs/heads/master
 sudo cp /tmp/hosts_new /etc/hosts
 
 rm /tmp/hosts_new
+
+## Install Claude Code
+
+npm install -g @anthropic-ai/claude-code ccusage npm pnpm

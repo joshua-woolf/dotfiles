@@ -1,5 +1,6 @@
 export HOMEBREW_NO_ANALYTICS=1
 export PATH="/Users/joshuaw/.rd/bin:$PATH"
+export NVM_DIR="$HOME/.nvm"
 
 HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
 SAVEHIST=8192
@@ -52,6 +53,8 @@ function nr {
   code .
 }
 
+source /opt/homebrew/opt/nvm/nvm.sh
+source /opt/homebrew/opt/nvm/etc/bash_completion.d/nvm
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
