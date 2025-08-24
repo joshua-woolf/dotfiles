@@ -1,33 +1,20 @@
-## Set macOS Settings
+## Config
 
-https://www.privacyguides.org/en/os/macos-overview/
+This is my personal configuration for macOS.
 
-## Prerequisites
+## Run the Setup
 
 ```bash
 chmod +x *.sh
-```
-
-## Install Applications
-
-```bash
 ./setup.sh
 ```
 
-## Install Configurations
+## Update the Brewfile
 
 ```bash
-./install-config.sh
+brew bundle dump --file=Brewfile --force
 ```
 
-## Uninstall Configurations
+## Other Setup
 
-```bash
-./uninstall-config.sh
-```
-
-## Update Brewfile
-
-```bash
-brew bundle dump --file=Brewfile
-```
+[Privacy Guides macOS Overview](https://www.privacyguides.org/en/os/macos-overview/)
