@@ -1,4 +1,4 @@
-## Config
+# Configuration
 
 This is my personal configuration for macOS.
 
