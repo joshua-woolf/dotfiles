@@ -26,6 +26,8 @@ alias c="clear"
 alias chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
 alias d="docker"
 alias dc="docker-compose"
+alias docker="podman"
+alias docker-compose="podman-compose"
 alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
 alias g="git"
 alias grep='grep --color=auto'
