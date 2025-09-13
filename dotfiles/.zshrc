@@ -18,7 +18,16 @@ setopt NO_CASE_GLOB
 zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
 zstyle ':completion:*' list-suffixeszstyle ':completion:*' expand prefix suffix
 
+if type brew &>/dev/null; then
+  fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
+fi
+
 autoload -Uz compinit
+
+if [[ -f ~/.zcompdump ]]; then
+  rm ~/.zcompdump
+fi
+
 compinit
 
 alias ..="cd .."
