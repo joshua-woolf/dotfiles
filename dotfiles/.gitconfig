@@ -26,6 +26,8 @@
   authors = !git log --format='%aN <%aE>' | grep -v 'users.noreply.github.com' | sort -u --ignore-case
   # Contributors summary (commit counts per author)
   contrib = shortlog --summary --numbered
+  # Full cleanup: checkout main, fetch/prune, prune worktrees, pull, clean, prune remotes, delete branches with gone upstreams
+  gtm = "!git checkout main && git fetch --prune && git worktree prune && git pull && git clean -fdx && git remote prune origin; git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -d"
   # Pretty one-line graph with relative time and author
   l = log --graph --abbrev-commit --pretty=format:'%Cred%h%Creset %Cgreen%ad%Creset %s %C(blue)<%an>%Creset%C(yellow)%d%Creset' --date=short
   # Log since N days ago (default 1) for current user
@@ -40,3 +42,5 @@
   s = status -sb
   # List all tags
   tags = tag -l
+  # Update current repo: fetch/prune, prune worktrees, then pull
+  u = "!git fetch --prune && git worktree prune && git pull"
