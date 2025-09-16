@@ -7,8 +7,6 @@
 	process = git-lfs filter-process
 	required = true
 	clean = git-lfs clean -- %f
-[core]
-	excludesfile = ~/.config/git/ignore
 [fetch]
   prune = true
 [init]
