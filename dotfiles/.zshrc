@@ -57,10 +57,14 @@ alias sudo='sudo '
 alias update='sudo softwareupdate -i -a; brew update && brew upgrade --greedy && brew cleanup; npm install npm -g; npm update -g'
 
 function nr {
-  repos
+  cd "$HOME/GitHub"
   mkdir -p "$1"
+  git clone https://github.com/joshua-woolf/starter-template.git "$1"
   cd "$1"
+  rm -rf .git
   git init
+  git add .
+  git commit -m "Initial commit from template"
   code .
 }
 
