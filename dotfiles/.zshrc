@@ -54,7 +54,7 @@ alias ll="ls -alF -G"
 alias repos='cd "$HOME/GitHub"'
 alias path='echo -e ${PATH//:/\\n}'
 alias sudo='sudo '
-alias update='sudo softwareupdate -i -a; brew update && brew upgrade --greedy && brew cleanup; npm install npm -g; npm update -g'
+alias update='sudo softwareupdate -i -a; brew update && brew upgrade --greedy && brew cleanup; npm install -g --no-fund @anthropic-ai/claude-code@latest ccusage@latest npm@latest pnpm@latest'
 
 function nr {
   cd "$HOME/GitHub"
