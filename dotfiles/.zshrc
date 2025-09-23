@@ -1,6 +1,7 @@
 export CARAPACE_BRIDGES='zsh'
 export HOMEBREW_NO_ANALYTICS=1
 export NVM_DIR="$HOME/.nvm"
+export REPOS_DIR="$HOME/Repos"
 
 HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
 SAVEHIST=8192
@@ -24,7 +25,6 @@ source <(carapace _carapace)
 
 alias ..="cd .."
 alias c="clear"
-alias chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
 alias d="docker"
 alias dc="docker-compose"
 alias docker="podman"
@@ -43,13 +43,13 @@ alias ipl="ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([
 alias k="kubectl"
 alias ls="command ls -F -G"
 alias ll="ls -alF -G"
-alias repos='cd "$HOME/GitHub"'
+alias repos='cd "$REPOS_DIR"'
 alias path='echo -e ${PATH//:/\\n}'
 alias sudo='sudo '
 alias update='sudo softwareupdate -i -a; brew update && brew upgrade --greedy && brew cleanup; npm install -g --no-fund @anthropic-ai/claude-code@latest ccusage@latest npm@latest pnpm@latest'
 
 function nr {
-  cd "$HOME/GitHub"
+  cd "$REPOS_DIR"
   mkdir -p "$1"
   git clone https://github.com/joshua-woolf/starter-template.git "$1"
   cd "$1"
