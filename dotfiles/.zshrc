@@ -1,5 +1,5 @@
+export CARAPACE_BRIDGES='zsh'
 export HOMEBREW_NO_ANALYTICS=1
-export PATH="/Users/joshuaw/.rd/bin:$PATH"
 export NVM_DIR="$HOME/.nvm"
 
 HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
@@ -15,20 +15,12 @@ setopt INC_APPEND_HISTORY
 setopt SHARE_HISTORY
 setopt NO_CASE_GLOB
 
-zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
-zstyle ':completion:*' list-suffixeszstyle ':completion:*' expand prefix suffix
-
-if type brew &>/dev/null; then
-  fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
-fi
-
 autoload -Uz compinit
 
-if [[ -f ~/.zcompdump ]]; then
-  rm ~/.zcompdump
-fi
-
 compinit
+
+zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+source <(carapace _carapace)
 
 alias ..="cd .."
 alias c="clear"
@@ -69,9 +61,9 @@ function nr {
 }
 
 source /opt/homebrew/opt/nvm/nvm.sh
-source /opt/homebrew/opt/nvm/etc/bash_completion.d/nvm
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-eval "$(starship init zsh)"
 eval "$(mcfly init zsh)"
+eval "$(starship init zsh)"
+eval "$(zoxide init zsh)"
