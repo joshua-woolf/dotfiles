@@ -44,6 +44,12 @@ nvm alias default node
 
 npm install -g @anthropic-ai/claude-code@latest ccusage@latest npm@latest pnpm@latest
 
+## Dotnet
+
+wget https://dot.net/v1/dotnet-install.sh
+chmod +x dotnet-install.sh
+./dotnet-install.sh --channel STS
+
 ## Update Hosts File
 
 curl -fsSL https://raw.githubusercontent.com/StevenBlack/hosts/refs/heads/master/hosts -o /tmp/hosts_new
