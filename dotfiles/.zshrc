@@ -4,6 +4,7 @@ export HOMEBREW_NO_ANALYTICS=1
 export NVM_DIR="$HOME/.nvm"
 export PATH="$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools:$HOME/.rd/bin"
 export REPOS_DIR="$HOME/Repos"
+export SCRIPTS_DIR="$HOME/Scripts"
 
 HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
 SAVEHIST=8192
@@ -60,6 +61,38 @@ function nr {
   git add .
   git commit -m "Initial commit from template"
   code .
+}
+
+function ugr {
+  local root_directory="${REPOS_DIR}"
+  local original_dir=$(pwd)
+
+  if [ ! -d "$root_directory" ]; then
+    echo "Error: Directory '$root_directory' does not exist."
+    return 1
+  fi
+
+  echo "Updating Git repositories in: $root_directory"
+
+  for dir in "$root_directory"/*/; do
+    [ ! -d "$dir" ] && continue
+    if [ -d "$dir/.git" ]; then
+      echo "Updating $(basename "$dir")..."
+
+      if cd "$dir"; then
+        git fetch --prune && git worktree prune && git pull
+        if [ $? -ne 0 ]; then
+          echo "Warning: Git operations failed in $(basename "$dir")"
+        fi
+      else
+        echo "Error: Failed to change to directory: $dir"
+      fi
+      echo ""
+    fi
+  done
+
+  cd "$original_dir"
+  echo "Finished updating repositories."
 }
 
 source /opt/homebrew/opt/nvm/nvm.sh
