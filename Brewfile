@@ -75,7 +75,6 @@ cask "transmission"
 cask "utm"
 cask "visual-studio-code"
 cask "vlc"
-cask "wezterm"
 cask "whatsapp"
 mas "GarageBand", id: 682658836
 mas "Photomator", id: 1444636541
