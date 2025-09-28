@@ -49,7 +49,7 @@ alias ll="ls -alF -G"
 alias repos='cd "$REPOS_DIR"'
 alias path='echo -e ${PATH//:/\\n}'
 alias sudo='sudo '
-alias update='sudo softwareupdate -i -a; brew update && brew upgrade --greedy && brew cleanup; npm install -g --no-fund @anthropic-ai/claude-code@latest ccusage@latest npm@latest pnpm@latest'
+alias update='sudo softwareupdate -i -a; brew update && brew upgrade --greedy; npm install -g --no-fund @anthropic-ai/claude-code@latest ccusage@latest npm@latest pnpm@latest'
 
 function nr {
   cd "$REPOS_DIR"
@@ -93,6 +93,20 @@ function ugr {
 
   cd "$original_dir"
   echo "Finished updating repositories."
+}
+
+function clean {
+  rm -rf ~/Library/Application\ Support/CrashReporter/*
+  rm -rf ~/Library/Caches/*
+  rm -rf ~/Library/Logs/*
+  brew cleanup -s
+  brew autoremove
+  npm cache clean --force
+  pnpm store prune
+  pip3 cache purge
+  gem cleanup
+  go clean -cache -testcache -modcache -fuzzcache
+  dotnet nuget locals all --clear
 }
 
 source /opt/homebrew/opt/nvm/nvm.sh
