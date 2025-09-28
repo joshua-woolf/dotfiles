@@ -1,3 +1,4 @@
+confirm-close-surface = false
 copy-on-select = clipboard
 cursor-style = block
 font-family = Cascadia Code NF
