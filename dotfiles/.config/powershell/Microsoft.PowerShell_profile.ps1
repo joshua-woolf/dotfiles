@@ -30,6 +30,7 @@ function Invoke-Starship-PreCommand {
 }
 
 Invoke-Expression (&/opt/homebrew/bin/starship init powershell)
+Invoke-Expression (& { (zoxide init powershell | Out-String) })
 
 $prompt = ""
 
