@@ -107,6 +107,7 @@ function clean {
   gem cleanup
   go clean -cache -testcache -modcache -fuzzcache
   dotnet nuget locals all --clear
+  docker system prune --all --volumes --force
 }
 
 source /opt/homebrew/opt/nvm/nvm.sh
