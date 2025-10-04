@@ -96,9 +96,6 @@ function ugr {
 }
 
 function clean {
-  rm -rf ~/Library/Application\ Support/CrashReporter/*
-  rm -rf ~/Library/Caches/*
-  rm -rf ~/Library/Logs/*
   brew cleanup -s
   brew autoremove
   npm cache clean --force
