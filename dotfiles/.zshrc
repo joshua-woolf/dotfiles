@@ -95,6 +95,59 @@ function ugr {
   echo "Finished updating repositories."
 }
 
+function kc {
+  local -a items
+  local current idx=0 key
+
+  items=("${(@f)$(kubectl config get-contexts -o name 2>/dev/null)}")
+  [ ${#items} -eq 0 ] && echo "No contexts found." && return 1
+  current=$(kubectl config current-context 2>/dev/null)
+
+  for i in {1..${#items}}; do
+    [ "${items[$i]}" = "$current" ] && idx=$((i-1)) && break
+  done
+
+  _kc_draw() {
+    printf "\e[%dA" ${#items} 2>/dev/null
+    for i in {1..${#items}}; do
+      local label="${items[$i]}"
+      [ "$label" = "$current" ] && label="$label (current)"
+      if [ $((i-1)) -eq $idx ]; then
+        printf "\e[2K  \e[32m> %s\e[0m\n" "$label"
+      else
+        printf "\e[2K    %s\n" "$label"
+      fi
+    done
+  }
+
+  printf '\n%.0s' {1..${#items}}
+  _kc_draw
+
+  while true; do
+    read -rsk1 key
+    if [ "$key" = $'\e' ]; then
+      read -rsk1 -t 0.01 key
+      if [ "$key" = "[" ]; then
+        read -rsk1 -t 0.01 key
+        case "$key" in
+          A) ((idx > 0)) && ((idx--)) ;;
+          B) ((idx < ${#items} - 1)) && ((idx++)) ;;
+        esac
+      else
+        echo; return 0
+      fi
+    elif [ "$key" = $'\n' ]; then
+      break
+    elif [ "$key" = "q" ]; then
+      echo; return 0
+    fi
+    _kc_draw
+  done
+
+  kubectl config use-context "${items[$((idx+1))]}"
+  unfunction _kc_draw 2>/dev/null
+}
+
 function clean {
   brew cleanup -s
   brew autoremove
