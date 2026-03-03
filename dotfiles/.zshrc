@@ -2,7 +2,7 @@ export CARAPACE_BRIDGES='zsh'
 export DOTNET_ROOT="$HOME/.dotnet"
 export HOMEBREW_NO_ANALYTICS=1
 export NVM_DIR="$HOME/.nvm"
-export PATH="$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools:$HOME/.rd/bin"
+export PATH="$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools:$HOME/.rd/bin:$HOME/.local/bin"
 export REPOS_DIR="$HOME/Repos"
 export SCRIPTS_DIR="$HOME/Scripts"
 
