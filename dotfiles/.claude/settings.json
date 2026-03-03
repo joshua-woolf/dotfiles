@@ -1,9 +1,10 @@
 {
+  "model": "opus",
   "statusLine": {
     "type": "command",
-    "command": "npx -y ccusage statusline --visual-burn-rate emoji",
+    "command": "bunx -y ccstatusline@latest",
     "padding": 0
   },
   "skipDangerousModePermissionPrompt": true,
-  "model": "opus"
+  "effortLevel": "high"
 }
