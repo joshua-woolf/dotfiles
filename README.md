@@ -62,7 +62,7 @@ nvm alias default node
 Install apps with NPM:
 
 ```shell
-npm install -g @anthropic-ai/claude-code ccusage npm pnpm
+npm install -g ccusage npm pnpm
 ```
 
 Install .NET SDK and Aspire workload:
