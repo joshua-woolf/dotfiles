@@ -2,7 +2,7 @@ export CARAPACE_BRIDGES='zsh'
 export DOTNET_ROOT="$HOME/.dotnet"
 export HOMEBREW_NO_ANALYTICS=1
 export NVM_DIR="$HOME/.nvm"
-export PATH="$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools:$HOME/.rd/bin:$HOME/.local/bin"
+export PATH="$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools:$HOME/.local/bin:$HOME/.cargo/bin"
 export REPOS_DIR="$HOME/Repos"
 export SCRIPTS_DIR="$HOME/Scripts"
 
@@ -28,10 +28,9 @@ source <(carapace _carapace)
 
 alias ..="cd .."
 alias c="clear"
+alias cc="claude --dangerously-skip-permissions"
 alias d="docker"
 alias dc="docker-compose"
-alias docker="podman"
-alias docker-compose="podman-compose"
 alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
 alias g="git"
 alias grep='grep --color=auto'
