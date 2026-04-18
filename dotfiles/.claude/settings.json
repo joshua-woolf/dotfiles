@@ -1,8 +1,10 @@
 {
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
   "permissions": {
     "defaultMode": "default"
   },
-  "model": "opusplan",
   "statusLine": {
     "type": "command",
     "command": "bunx -y ccstatusline@latest",
@@ -25,8 +27,10 @@
     "playground@claude-plugins-official": true,
     "github@claude-plugins-official": true,
     "pr-review-toolkit@claude-plugins-official": true,
-    "plugin-dev@claude-plugins-official": true
+    "plugin-dev@claude-plugins-official": true,
+    "swift-lsp@claude-plugins-official": true
   },
   "effortLevel": "medium",
+  "advisorModel": "opus",
   "skipDangerousModePermissionPrompt": true
 }
