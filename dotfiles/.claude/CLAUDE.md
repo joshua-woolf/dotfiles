@@ -1,5 +1,13 @@
 # Agent Instructions
 
+## Response Style
+
+- Be concise and direct. Skip preamble and postamble.
+- No "Great question!" or "Let me explain…". Just answer.
+- Don't re-summarize changes after making them unless asked.
+- Omit caveats unless they're load-bearing.
+- Code blocks only when showing code; don't wrap single commands.
+
 ## Development Environment
 
 The development environment is a Mac Mini M4 Pro with 24GB of RAM running macOS Tahoe.
