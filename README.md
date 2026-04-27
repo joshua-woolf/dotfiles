@@ -52,19 +52,6 @@ cd dotfiles || exit
 stow -d dotfiles -t "$HOME" .
 ```
 
-Install Node:
-
-```shell
-nvm install node
-nvm alias default node
-```
-
-Install apps with NPM:
-
-```shell
-npm install -g ccusage npm pnpm
-```
-
 Install .NET SDK and Aspire workload:
 
 ```shell
