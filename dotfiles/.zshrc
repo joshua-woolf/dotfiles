@@ -1,11 +1,3 @@
-export CARAPACE_BRIDGES='zsh'
-export DOTNET_ROOT="$HOME/.dotnet"
-export HOMEBREW_NO_ANALYTICS=1
-export NVM_DIR="$HOME/.nvm"
-export PATH="$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools:$HOME/.local/bin:$HOME/.cargo/bin"
-export REPOS_DIR="$HOME/Repos"
-export SCRIPTS_DIR="$HOME/Scripts"
-
 HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
 SAVEHIST=8192
 HISTSIZE=8192
@@ -48,7 +40,7 @@ alias ll="ls -alF -G"
 alias repos='cd "$REPOS_DIR"'
 alias path='echo -e ${PATH//:/\\n}'
 alias sudo='sudo '
-alias update='sudo softwareupdate -i -a; brew update && brew upgrade --greedy; npm install -g --no-fund ccusage@latest npm@latest pnpm@latest'
+alias update='sudo softwareupdate -i -a; mas upgrade; brew update && brew upgrade --greedy'
 
 function nr {
   cd "$REPOS_DIR"
@@ -148,18 +140,14 @@ function kc {
 }
 
 function clean {
-  brew cleanup -s
+  brew cleanup --prune=all
   brew autoremove
-  npm cache clean --force
-  pnpm store prune
   pip3 cache purge
   gem cleanup
   go clean -cache -testcache -modcache -fuzzcache
-  dotnet nuget locals all --clear
   docker system prune --all --volumes --force
 }
 
-source /opt/homebrew/opt/nvm/nvm.sh
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
