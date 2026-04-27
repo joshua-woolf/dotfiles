@@ -36,7 +36,7 @@ alias g="git"
 alias grep='grep --color=auto'
 alias home='code "$HOME"'
 alias hosts='code /etc/hosts'
-alias kubeconfig= 'code "$HOME/.kube/config"'
+alias kubeconfig='code "$HOME/.kube/config"'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias flush="dscacheutil -flushcache && killall -HUP mDNSResponder"
