@@ -37,10 +37,12 @@ alias ipl="ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([
 alias k="kubectl"
 alias ls="command ls -F -G"
 alias ll="ls -alF -G"
-alias repos='cd "$REPOS_DIR"'
+alias o='open .'
 alias path='echo -e ${PATH//:/\\n}'
+alias repos='cd "$REPOS_DIR"'
 alias sudo='sudo '
-alias update='sudo softwareupdate -i -a; mas upgrade; brew update && brew upgrade --greedy'
+alias update='sudo softwareupdate -i -a; mas upgrade; brew update && brew upgrade --greedy; mise upgrade'
+alias v='code .'
 
 function nr {
   cd "$REPOS_DIR"
@@ -152,5 +154,6 @@ source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 eval "$(atuin init zsh)"
+eval "$(mise activate zsh)"
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"

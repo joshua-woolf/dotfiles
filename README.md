@@ -52,16 +52,22 @@ cd dotfiles || exit
 stow -d dotfiles -t "$HOME" .
 ```
 
-Install .NET SDK and Aspire workload:
+Install SDKs:
 
 ```shell
-SCRIPTS_DIR="$HOME/Scripts"
-mkdir -p "$SCRIPTS_DIR"
-cd "$SCRIPTS_DIR" || exit
-wget https://dot.net/v1/dotnet-install.sh
-chmod +x dotnet-install.sh
-./dotnet-install.sh --channel STS
+mise install
+```
+
+Install .NET Aspire workload:
+
+```shell
 dotnet workload install aspire
+```
+
+Install C# Language Server:
+
+```shell
+dotnet tool install --global csharp-ls
 ```
 
 Block bad things with StevenBlack's hosts file:
