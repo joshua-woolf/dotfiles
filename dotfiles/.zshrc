@@ -41,7 +41,7 @@ alias o='open .'
 alias path='echo -e ${PATH//:/\\n}'
 alias repos='cd "$REPOS_DIR"'
 alias sudo='sudo '
-alias update='sudo softwareupdate -i -a; mas upgrade; brew update && brew upgrade --greedy; mise upgrade'
+alias update='sudo softwareupdate -i -a; mas upgrade; brew update && brew upgrade --greedy --yes; mise upgrade'
 alias v='code .'
 
 function nr {
