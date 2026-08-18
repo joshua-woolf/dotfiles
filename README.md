@@ -1,83 +1,68 @@
 # Configuration
 
-This is my personal configuration for macOS.
+My personal configuration for macOS at work. Managed with **GNU Stow** (symlinks),
+**Homebrew** (apps) and **mise** (SDKs/runtimes).
 
-## Update the Brewfile
+## Setup
 
-```bash
-brew bundle dump --file=Brewfile --force
-```
-
-## Machine Setup
-
-Install Rosetta:
-
-```shell
-sudo softwareupdate --install-rosetta
-```
-
-Show hidden files in Finder:
-
-```shell
-defaults write com.apple.finder AppleShowAllFiles -bool true
-```
-
-Install Homebrew:
-
-```shell
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-eval "$(/opt/homebrew/bin/brew shellenv)"
-```
-
-Install apps with Homebrew:
-
-```shell
-brew bundle --file ./Brewfile
-```
-
-Authenticate with GitHub:
-
-```shell
-gh auth login
-```
-
-Clone dotfiles and apply with GNU Stow:
+Clone the repo and run the bootstrap script. It is idempotent — safe to re-run at
+any time.
 
 ```shell
 REPOS_DIR="$HOME/Repos"
 mkdir -p "$REPOS_DIR"
-cd "$REPOS_DIR" || exit
-git clone https://github.com/joshua-woolf/dotfiles.git dotfiles
-cd dotfiles || exit
-stow -d dotfiles -t "$HOME" .
+git clone https://github.com/joshua-woolf/dotfiles.git "$REPOS_DIR/dotfiles"
+cd "$REPOS_DIR/dotfiles"
+./install.sh
 ```
 
-Install SDKs:
+`install.sh` installs Rosetta and Homebrew, runs `brew bundle`, applies the dotfiles
+with Stow, runs `mise install`, and sets a couple of macOS defaults.
+Interactive/one-off steps (GitHub auth, MCP registration, Aspire, etc.) are printed at
+the end for you to run by hand.
+
+## Maintenance
+
+Update the Brewfile after installing/removing apps:
 
 ```shell
-mise install
+brew bundle dump --file=Brewfile --force --formula --cask --tap --mas --no-describe
 ```
 
-Install .NET Aspire workload:
+Run `update` (see below) to keep the OS, apps, SDKs and local repos current.
+
+Re-apply the Stow symlinks after adding, moving or removing anything under
+[`dotfiles/`](dotfiles):
 
 ```shell
-dotnet workload install aspire
+./stow.sh
 ```
 
-Install C# Language Server:
+## Aliases & functions
 
-```shell
-dotnet tool install --global csharp-ls
-```
+Defined in [`dotfiles/.config/zsh/`](dotfiles/.config/zsh) and
+[`dotfiles/.gitconfig`](dotfiles/.gitconfig).
 
-Block bad things with StevenBlack's hosts file:
+### Shell functions
 
-```shell
-curl -fsSL https://raw.githubusercontent.com/StevenBlack/hosts/refs/heads/master/hosts -o /tmp/hosts_new
-sudo cp /tmp/hosts_new /etc/hosts
-rm /tmp/hosts_new
-```
+| Command | Description |
+| --- | --- |
+| `nr <name>` | Scaffold a new repo from the template into `$REPOS_DIR` and open it. |
+| `update` | Update macOS, App Store apps, `mise`, Homebrew, global npm tooling, and all local repos. |
+| `ugr` | Fetch + pull every git repo (and its worktrees) under `$REPOS_DIR`. |
+| `kc` | Interactive `kubectl` context picker (arrow keys, enter to switch). |
+| `clean` | Reclaim disk space across brew/npm/pnpm/pip/gem/go/dotnet/docker caches. |
 
-Configure macOS for privacy and security:
+Common aliases include `g` (git), `k` (kubectl), `d`/`dc`/`dcu`/`dcd` (docker),
+`v`/`home` (open in VS Code), and `repos` (cd to `$REPOS_DIR`).
 
-[Privacy Guides macOS Overview](https://www.privacyguides.org/en/os/macos-overview/)
+### Git aliases
+
+| Alias | Description |
+| --- | --- |
+| `git gtm` | Go to `main`, prune, pull, clean, and delete branches whose upstream is gone. |
+| `git l` | Compact one-line graph log. |
+| `git ld [n]` | Your commits from the last `n` days (default 1). |
+| `git u` | Fetch (prune) + prune worktrees + pull. |
+| `git s` | Short status with branch info. |
+
