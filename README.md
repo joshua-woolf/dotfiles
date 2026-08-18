@@ -38,6 +38,12 @@ Re-apply the Stow symlinks after adding, moving or removing anything under
 ./stow.sh
 ```
 
+Run the local safety and configuration checks before committing changes:
+
+```shell
+./scripts/doctor
+```
+
 ## Aliases & functions
 
 Defined in [`dotfiles/.config/zsh/`](dotfiles/.config/zsh) and
@@ -49,7 +55,7 @@ Defined in [`dotfiles/.config/zsh/`](dotfiles/.config/zsh) and
 | --- | --- |
 | `nr <name>` | Scaffold a new repo from the template into `$REPOS_DIR` and open it. |
 | `update` | Update macOS, App Store apps, `mise`, Homebrew, global npm tooling, and all local repos. |
-| `ugr` | Fetch + pull every git repo (and its worktrees) under `$REPOS_DIR`. |
+| `ugr` | Fetch + fast-forward every git repo (and its worktrees) under `$REPOS_DIR`, reporting failures. |
 | `kc` | Interactive `kubectl` context picker (arrow keys, enter to switch). |
 | `clean` | Reclaim disk space across brew/npm/pnpm/pip/gem/go/dotnet/docker caches. |
 
@@ -65,4 +71,3 @@ Common aliases include `g` (git), `k` (kubectl), `d`/`dc`/`dcu`/`dcd` (docker),
 | `git ld [n]` | Your commits from the last `n` days (default 1). |
 | `git u` | Fetch (prune) + prune worktrees + pull. |
 | `git s` | Short status with branch info. |
-

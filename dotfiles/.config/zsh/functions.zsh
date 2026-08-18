@@ -9,31 +9,82 @@ function drm {
 
 # Scaffold a new repo from the template into $REPOS_DIR and open it.
 function nr {
-  cd "${REPOS_DIR}"
-  mkdir -p "$1"
-  git clone https://github.com/joshua-woolf/starter-template.git "$1"
-  cd "$1"
-  rm -rf .git
-  git init
-  git add .
-  git commit -m "Initial commit from template"
-  code .
+  local repo_name="${1:-}"
+  local destination staging_directory
+
+  if [[ $# -ne 1 || -z "$repo_name" ]]; then
+    echo "Usage: nr <name>" >&2
+    return 2
+  fi
+  if [[ "$repo_name" == -* || "$repo_name" == */* || "$repo_name" == "." || "$repo_name" == ".." ]]; then
+    echo "Error: repository name must be a single directory name." >&2
+    return 2
+  fi
+
+  mkdir -p -- "$REPOS_DIR" || return 1
+  destination="${REPOS_DIR}/${repo_name}"
+  if [[ -e "$destination" || -L "$destination" ]]; then
+    echo "Error: destination already exists: $destination" >&2
+    return 1
+  fi
+
+  staging_directory=$(mktemp -d "${REPOS_DIR}/.nr.XXXXXX") || return 1
+  if ! git clone https://github.com/joshua-woolf/starter-template.git "$staging_directory"; then
+    echo "Error: template clone failed; no repository was created." >&2
+    rm -rf -- "$staging_directory"
+    return 1
+  fi
+  if ! rm -rf -- "$staging_directory/.git"; then
+    echo "Error: could not remove template Git history; leaving staging directory:" >&2
+    echo "       $staging_directory" >&2
+    return 1
+  fi
+  if ! git -C "$staging_directory" init; then
+    echo "Error: could not initialise the new repository; leaving staging directory:" >&2
+    echo "       $staging_directory" >&2
+    return 1
+  fi
+  if ! git -C "$staging_directory" add --all \
+    || ! git -C "$staging_directory" commit -m "Initial commit from template"; then
+    echo "Error: could not create the initial commit; leaving staging directory:" >&2
+    echo "       $staging_directory" >&2
+    return 1
+  fi
+  if ! mv -- "$staging_directory" "$destination"; then
+    echo "Error: could not publish the new repository; leaving staging directory:" >&2
+    echo "       $staging_directory" >&2
+    return 1
+  fi
+  code "$destination"
 }
 
 # Update the OS, apps, SDKs, global npm tooling and all local git repos.
 function update {
-  sudo softwareupdate -i -a
-  mas update
-  mise upgrade
-  brew update
-  brew upgrade --greedy --yes
-  ugr
+  local failed=0
+
+  sudo softwareupdate -i -a || failed=1
+  mas update || failed=1
+  mise upgrade || failed=1
+  brew update || failed=1
+  brew upgrade --greedy --yes || failed=1
+  if command -v npm >/dev/null 2>&1; then
+    npm update --global || failed=1
+  fi
+  ugr || failed=1
+
+  if (( failed )); then
+    echo "Update completed with failures." >&2
+    return 1
+  fi
+  echo "Update completed successfully."
 }
 
 # Fetch + pull every git repo (and its worktrees) under $REPOS_DIR.
 function ugr {
+  setopt local_options null_glob
   local root_directory="${REPOS_DIR}"
-  local original_dir=$(pwd)
+  local repo_path repo_name worktree_path worktree_name
+  local -a failed_repositories=()
 
   if [ ! -d "$root_directory" ]; then
     echo "Error: Directory '$root_directory' does not exist."
@@ -44,35 +95,38 @@ function ugr {
 
   for dir in "$root_directory"/*/; do
     [ ! -d "$dir" ] && continue
-    if [ -d "$dir/.git" ]; then
-      echo "Updating $(basename "$dir")..."
+    repo_path="${dir%/}"
+    [ ! -e "$repo_path/.git" ] && continue
+    repo_name="${repo_path:t}"
+    echo "Updating $repo_name..."
 
-      if cd "$dir"; then
-        git fetch --prune && git worktree prune && git pull
-        if [ $? -ne 0 ]; then
-          echo "Warning: Git operations failed in $(basename "$dir")"
-        fi
-
-        git worktree list --porcelain | grep -E "^worktree" | cut -d' ' -f2 | while read -r worktree_path; do
-          if [ "$worktree_path" != "$dir" ] && [ -d "$worktree_path" ]; then
-            echo "  Updating worktree: $(basename "$worktree_path")..."
-            if cd "$worktree_path"; then
-              git pull
-              if [ $? -ne 0 ]; then
-                echo "  Warning: Git pull failed in worktree $(basename "$worktree_path")"
-              fi
-            fi
-          fi
-        done
-      else
-        echo "Error: Failed to change to directory: $dir"
-      fi
+    if ! git -C "$repo_path" fetch --prune \
+      || ! git -C "$repo_path" worktree prune \
+      || ! git -C "$repo_path" pull --ff-only; then
+      failed_repositories+=("$repo_name")
+      echo "  Warning: base repository update failed; worktrees skipped."
       echo ""
+      continue
     fi
+
+    while IFS= read -r worktree_path; do
+      [ "$worktree_path" = "$repo_path" ] && continue
+      [ ! -d "$worktree_path" ] && continue
+      worktree_name="${worktree_path:t}"
+      echo "  Updating worktree $worktree_name..."
+      if ! git -C "$worktree_path" pull --ff-only; then
+        failed_repositories+=("$repo_name/$worktree_name")
+      fi
+    done < <(git -C "$repo_path" worktree list --porcelain | sed -n 's/^worktree //p')
+    echo ""
   done
 
-  cd "$original_dir"
-  echo "Finished updating repositories."
+  if (( ${#failed_repositories} )); then
+    echo "Repositories with update failures:" >&2
+    printf '  - %s\n' "${failed_repositories[@]}" >&2
+    return 1
+  fi
+  echo "Finished updating repositories successfully."
 }
 
 # Interactive kubectl context picker (arrow keys to select, enter to switch).
