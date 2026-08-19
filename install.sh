@@ -73,9 +73,6 @@ print_extras() {
   dotnet workload install aspire
   curl -sSL https://aspire.dev/install.sh | bash   # review before running
   dotnet tool install --global csharp-ls
-
-  # Azure Bastion extension
-  az extension add --name bastion
 EOF
 }
 
