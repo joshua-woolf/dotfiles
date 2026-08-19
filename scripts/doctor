@@ -57,6 +57,11 @@ check "bootstrap scripts are executable" test -x "$SCRIPT_DIR/install.sh" \
   -a -x "$SCRIPT_DIR/stow.sh" -a -x "$SCRIPT_DIR/scripts/doctor"
 check "Bash syntax" bash -n "${shell_scripts[@]}"
 check "Zsh syntax" zsh -n "${zsh_files[@]}"
+if command -v ruby >/dev/null 2>&1; then
+  check "Brewfile syntax" ruby -c "$SCRIPT_DIR/Brewfile"
+else
+  skip "Ruby is not installed (Brewfile syntax unavailable)"
+fi
 check "Git config parses" check_git_config
 check "Git whitespace check" git -C "$SCRIPT_DIR" diff --check
 
