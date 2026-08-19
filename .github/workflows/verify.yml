@@ -49,6 +49,7 @@ jobs:
             shellcheck \
             shfmt \
             stow \
+            ruby \
             zsh
 
       - name: Run repository checks
