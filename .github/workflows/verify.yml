@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install tooling
-        run: sudo apt-get update && sudo apt-get install -y shellcheck zsh jq
+        run: sudo apt-get update && sudo apt-get install -y shellcheck zsh
 
       - name: Shellcheck POSIX/bash scripts
         run: shellcheck install.sh stow.sh
@@ -20,16 +20,13 @@ jobs:
       - name: Zsh syntax check
         run: zsh -n dotfiles/.zshrc dotfiles/.zprofile dotfiles/.config/zsh/*.zsh
 
-      # Installed from the Go module proxy rather than the upstream action,
-      # which is not on this org's allowed-actions list.
-      - uses: actions/setup-go@v5
+      - name: Set up EditorConfig Checker
+        uses: editorconfig-checker/action-editorconfig-checker@51f63319f592f97930c73d9c46184d20bd206393
         with:
-          go-version: stable
+          version: v3.8.0
 
       - name: EditorConfig check
-        run: |
-          go install github.com/editorconfig-checker/editorconfig-checker/v3/cmd/editorconfig-checker@v3.8.0
-          "$(go env GOPATH)/bin/editorconfig-checker"
+        run: editorconfig-checker
 
   stow-check:
     runs-on: macos-latest
