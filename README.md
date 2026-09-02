@@ -1,6 +1,6 @@
 # Configuration
 
-My personal configuration for macOS at work. Managed with **GNU Stow** (symlinks),
+My personal configuration for macOS at home. Managed with **GNU Stow** (symlinks),
 **Homebrew** (apps) and **mise** (SDKs/runtimes).
 
 ## Setup
