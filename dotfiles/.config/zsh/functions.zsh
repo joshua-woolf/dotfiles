@@ -58,33 +58,18 @@ function nr {
   code "$destination"
 }
 
-# Update the OS, apps, SDKs, global npm tooling and all local git repos.
+# Update the OS, apps, SDKs and all local git repos.
 function update {
-  local failed=0
-
-  sudo softwareupdate -i -a || failed=1
-  mas update || failed=1
-  mise upgrade || failed=1
-  brew update || failed=1
-  brew upgrade --greedy --yes || failed=1
-  if command -v npm >/dev/null 2>&1; then
-    npm update --global || failed=1
-  fi
-  ugr || failed=1
-
-  if (( failed )); then
-    echo "Update completed with failures." >&2
-    return 1
-  fi
-  echo "Update completed successfully."
+  sudo softwareupdate -i -a
+  mise upgrade
+  brew update
+  brew upgrade --greedy --yes
+  ugr
 }
 
 # Fetch + pull every git repo (and its worktrees) under $REPOS_DIR.
 function ugr {
-  setopt local_options null_glob
   local root_directory="${REPOS_DIR}"
-  local repo_path repo_name worktree_path worktree_name
-  local -a failed_repositories=()
 
   if [ ! -d "$root_directory" ]; then
     echo "Error: Directory '$root_directory' does not exist."
@@ -93,106 +78,94 @@ function ugr {
 
   echo "Updating Git repositories in: $root_directory"
 
+  local -A seen
+  local dir worktree_path
+
   for dir in "$root_directory"/*/; do
-    [ ! -d "$dir" ] && continue
-    repo_path="${dir%/}"
-    [ ! -e "$repo_path/.git" ] && continue
-    repo_name="${repo_path:t}"
-    echo "Updating $repo_name..."
+    dir="${dir%/}"
+    # A linked worktree has .git as a file rather than a directory, so ask git
+    # instead of testing for a directory.
+    git -C "$dir" rev-parse --git-dir >/dev/null 2>&1 || continue
 
-    if ! git -C "$repo_path" fetch --prune \
-      || ! git -C "$repo_path" worktree prune \
-      || ! git -C "$repo_path" pull --ff-only; then
-      failed_repositories+=("$repo_name")
-      echo "  Warning: base repository update failed; worktrees skipped."
-      echo ""
-      continue
-    fi
+    # Expand each entry to every worktree of its repository, so a repo reached
+    # both directly and as another entry's worktree is still updated exactly
+    # once — and every path gets the same treatment.
+    for worktree_path in "$dir" ${(f)"$(git -C "$dir" worktree list --porcelain | sed -n 's/^worktree //p')"}; do
+      [[ -z "$worktree_path" || ! -d "$worktree_path" ]] && continue
+      [[ -n "${seen[$worktree_path]}" ]] && continue
+      seen[$worktree_path]=1
 
-    while IFS= read -r worktree_path; do
-      [ "$worktree_path" = "$repo_path" ] && continue
-      [ ! -d "$worktree_path" ] && continue
-      worktree_name="${worktree_path:t}"
-      echo "  Updating worktree $worktree_name..."
-      if ! git -C "$worktree_path" pull --ff-only; then
-        failed_repositories+=("$repo_name/$worktree_name")
-      fi
-    done < <(git -C "$repo_path" worktree list --porcelain | sed -n 's/^worktree //p')
-    echo ""
-  done
-
-  if (( ${#failed_repositories} )); then
-    echo "Repositories with update failures:" >&2
-    printf '  - %s\n' "${failed_repositories[@]}" >&2
-    return 1
-  fi
-  echo "Finished updating repositories successfully."
-}
-
-# Interactive kubectl context picker (arrow keys to select, enter to switch).
-function kc {
-  local -a items
-  local current idx=0 key
-
-  items=("${(@f)$(kubectl config get-contexts -o name 2>/dev/null)}")
-  [ ${#items} -eq 0 ] && echo "No contexts found." && return 1
-  current=$(kubectl config current-context 2>/dev/null)
-
-  for i in {1..${#items}}; do
-    [ "${items[$i]}" = "$current" ] && idx=$((i-1)) && break
-  done
-
-  _kc_draw() {
-    printf "\e[%dA" ${#items} 2>/dev/null
-    for i in {1..${#items}}; do
-      local label="${items[$i]}"
-      [ "$label" = "$current" ] && label="$label (current)"
-      if [ $((i-1)) -eq $idx ]; then
-        printf "\e[2K  \e[32m> %s\e[0m\n" "$label"
-      else
-        printf "\e[2K    %s\n" "$label"
+      echo "Updating $(basename "$worktree_path")..."
+      if ! git -C "$worktree_path" fetch --prune \
+        || ! git -C "$worktree_path" worktree prune \
+        || ! git -C "$worktree_path" pull; then
+        echo "Warning: Git operations failed in $(basename "$worktree_path")"
       fi
     done
-  }
-
-  printf '\n%.0s' {1..${#items}}
-  _kc_draw
-
-  while true; do
-    read -rsk1 key
-    if [ "$key" = $'\e' ]; then
-      read -rsk1 -t 0.01 key
-      if [ "$key" = "[" ]; then
-        read -rsk1 -t 0.01 key
-        case "$key" in
-          A) ((idx > 0)) && ((idx--)) ;;
-          B) ((idx < ${#items} - 1)) && ((idx++)) ;;
-        esac
-      else
-        echo; return 0
-      fi
-    elif [ "$key" = $'\n' ]; then
-      break
-    elif [ "$key" = "q" ]; then
-      echo; return 0
-    fi
-    _kc_draw
   done
 
-  kubectl config use-context "${items[$((idx+1))]}"
-  unfunction _kc_draw 2>/dev/null
+  echo "Finished updating repositories."
 }
 
-# Reclaim disk space across brew, npm, pnpm, pip, gem, go, dotnet and docker caches.
+# Interactive kubectl context picker.
+function kc {
+  local context
+  context="$(kubectl config get-contexts -o name | fzf --height=40% --reverse --prompt='context> ')" \
+    && [ -n "$context" ] && kubectl config use-context "$context"
+}
+
+# Reclaim disk space. The caches that actually hold gigabytes here are the ones
+# no tool cleans for you: npm's _npx directory, the trivy vulnerability DB, and
+# the Rider and VS Code caches. Everything below is re-downloaded or rebuilt on
+# demand.
 function clean {
   brew cleanup --prune=all
   brew autoremove
+
   npm cache clean --force
+  rm -rf "$HOME/.npm/_npx"                 # npm cache clean only clears _cacache
   pnpm store prune
+  rm -rf "$HOME/.bun/install/cache"        # bun pm cache rm needs a package.json in cwd
   pip3 cache purge
   gem cleanup
   go clean -cache -testcache -modcache -fuzzcache
   dotnet nuget locals all --clear
-  docker system prune --all --volumes --force
   uv cache clean --force
+  rm -rf "$HOME/.cargo/registry/cache" "$HOME/.cargo/git/checkouts"
+
+  # Tool versions no longer referenced by any mise config. --tools so that
+  # tracked configuration links are left alone.
+  command -v mise >/dev/null 2>&1 && mise prune --tools
+
+  command -v trivy >/dev/null 2>&1 \
+    && trivy clean --vuln-db --java-db --scan-cache --checks-bundle
+  rm -rf "$HOME/Library/Caches/ms-playwright"
+
+  # Editor caches — reindexed on next launch.
+  rm -rf "$HOME/Library/Caches/JetBrains"
+  rm -rf "$HOME/Library/Application Support/Code/Cache" \
+         "$HOME/Library/Application Support/Code/CachedData" \
+         "$HOME/Library/Application Support/Code/CachedExtensionVSIXs"
+
+  # Frees space inside the Rancher VM. The VM's own disk image does not shrink;
+  # that needs a factory reset from Rancher Desktop.
+  docker system prune --all --volumes --force
+
+  # Each rust toolchain is ~1.3G and rustup never removes the old ones a mise
+  # upgrade leaves behind. Keep the active toolchain and repoint rustup's default
+  # at it first, so shells without mise activation still have a usable default,
+  # then drop the rest. Skipped entirely if the active toolchain can't be read,
+  # rather than risk uninstalling everything.
+  if command -v rustup >/dev/null 2>&1; then
+    local active_toolchain stale_toolchain
+    active_toolchain="$(rustup show active-toolchain 2>/dev/null | cut -d' ' -f1)"
+    if [ -n "$active_toolchain" ]; then
+      rustup default "$active_toolchain"
+      for stale_toolchain in ${(f)"$(rustup toolchain list | cut -d' ' -f1)"}; do
+        if [ -n "$stale_toolchain" ] && [ "$stale_toolchain" != "$active_toolchain" ]; then
+          rustup toolchain uninstall "$stale_toolchain"
+        fi
+      done
+    fi
+  fi
 }

@@ -9,14 +9,20 @@ for _zsh_config in "$HOME"/.config/zsh/*.zsh(N); do
 done
 unset _zsh_config
 
-# Homebrew zsh plugins (optional — guard so a fresh machine doesn't error).
-[ -f /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ] \
-  && source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-[ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] \
-  && source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-# Tool initialisation.
+# Tool initialisation. fzf goes before atuin so atuin keeps ctrl-r and fzf keeps
+# ctrl-t / alt-c — whichever loads last wins the binding.
+# [-t 0] because fzf's keybindings need a terminal; without it `zsh -i -c ...`
+# warns "can't change option: zle".
+command -v fzf >/dev/null 2>&1 && [ -t 0 ] && source <(fzf --zsh)
 command -v atuin >/dev/null 2>&1 && eval "$(atuin init zsh)"
 command -v mise >/dev/null 2>&1 && eval "$(mise activate zsh)"
 command -v starship >/dev/null 2>&1 && eval "$(starship init zsh)"
 command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh)"
+
+# Homebrew zsh plugins (optional — guard so a fresh machine doesn't error).
+# These must come after every tool that adds a widget: zsh-syntax-highlighting
+# only wraps widgets that already exist when it loads, so it goes last of all.
+[ -f /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ] \
+  && source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+[ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] \
+  && source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

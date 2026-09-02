@@ -9,7 +9,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-log() { printf '\033[1;34m==>\033[0m %s\n' "$1"; }
+log()  { printf '\033[1;34m==>\033[0m %s\n' "$1"; }
 skip() { printf '\033[2;37m  - %s\033[0m\n' "$1"; }
 
 if [[ "$(uname -s)" != "Darwin" ]]; then
@@ -71,8 +71,11 @@ print_extras() {
 
   # .NET Aspire workload + CLI + C# language server
   dotnet workload install aspire
-  curl -sSL https://aspire.dev/install.sh | bash   # review before running
+  dotnet tool install --global aspire.cli
   dotnet tool install --global csharp-ls
+
+  # Azure Bastion extension
+  az extension add --name bastion
 EOF
 }
 

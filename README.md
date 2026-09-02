@@ -16,10 +16,7 @@ cd "$REPOS_DIR/dotfiles"
 ./install.sh
 ```
 
-`install.sh` installs Rosetta and Homebrew, runs `brew bundle`, applies the dotfiles
-with Stow, runs `mise install`, and sets a couple of macOS defaults.
-Interactive/one-off steps (GitHub auth, MCP registration, Aspire, etc.) are printed at
-the end for you to run by hand.
+`install.sh` installs Rosetta and Homebrew, runs `brew bundle`, applies the dotfiles with Stow, runs `mise install`, and shows hidden files in Finder. Interactive/one-off steps (Aspire, etc.) are printed at the end for you to run by hand.
 
 ## Maintenance
 
@@ -38,12 +35,6 @@ Re-apply the Stow symlinks after adding, moving or removing anything under
 ./stow.sh
 ```
 
-Run the local safety and configuration checks before committing changes:
-
-```shell
-./scripts/doctor
-```
-
 ## Aliases & functions
 
 Defined in [`dotfiles/.config/zsh/`](dotfiles/.config/zsh) and
@@ -54,10 +45,11 @@ Defined in [`dotfiles/.config/zsh/`](dotfiles/.config/zsh) and
 | Command | Description |
 | --- | --- |
 | `nr <name>` | Scaffold a new repo from the template into `$REPOS_DIR` and open it. |
-| `update` | Update macOS, App Store apps, `mise`, Homebrew, global npm tooling, and all local repos. |
-| `ugr` | Fetch + fast-forward every git repo (and its worktrees) under `$REPOS_DIR`, reporting failures. |
-| `kc` | Interactive `kubectl` context picker (arrow keys, enter to switch). |
-| `clean` | Reclaim disk space across brew/npm/pnpm/pip/gem/go/dotnet/docker caches. |
+| `update` | Update macOS, `mise`, Homebrew, and all local repos. |
+| `ugr` | Fetch + pull every git repo (and its worktrees) under `$REPOS_DIR`. |
+| `drm` | Force-remove every docker container, then prune images, networks and volumes. |
+| `kc` | Interactive `kubectl` context picker (`fzf`). |
+| `clean` | Reclaim disk space: package-manager, editor, scanner and docker caches, plus tool versions and rust toolchains nothing references any more. |
 
 Common aliases include `g` (git), `k` (kubectl), `d`/`dc`/`dcu`/`dcd` (docker),
 `v`/`home` (open in VS Code), and `repos` (cd to `$REPOS_DIR`).

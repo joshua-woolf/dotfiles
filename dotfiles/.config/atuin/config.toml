@@ -1,0 +1,7 @@
+# Accept the highlighted history entry straight to the prompt instead of only
+# filling the line.
+enter_accept = true
+
+[sync]
+# Use the newer record-based sync protocol.
+records = true

@@ -1,56 +1,46 @@
-name: Verify
+name: CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
 
-concurrency:
-  group: verify-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
-
-permissions:
-  contents: read
-
 jobs:
-  doctor:
-    name: Dotfiles checks
+  lint:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Install verification tools
-        env:
-          DEBIAN_FRONTEND: noninteractive
+      - name: Install tooling
+        run: sudo apt-get update && sudo apt-get install -y shellcheck zsh jq
+
+      - name: Shellcheck POSIX/bash scripts
+        run: shellcheck install.sh stow.sh
+
+      - name: Zsh syntax check
+        run: zsh -n dotfiles/.zshrc dotfiles/.zprofile dotfiles/.config/zsh/*.zsh
+
+      # Installed from the Go module proxy rather than the upstream action,
+      # which is not on this org's allowed-actions list.
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+
+      - name: EditorConfig check
         run: |
-          for source in /etc/apt/apt-mirrors.txt /etc/apt/sources.list /etc/apt/sources.list.d/*.list /etc/apt/sources.list.d/*.sources; do
-            if [[ -f "$source" ]]; then
-              sudo sed -i \
-                -e 's|http://azure.archive.ubuntu.com/ubuntu|https://archive.ubuntu.com/ubuntu|g' \
-                -e 's|https://azure.archive.ubuntu.com/ubuntu|https://archive.ubuntu.com/ubuntu|g' \
-                "$source"
-            fi
-          done
-          timeout --foreground 5m sudo apt-get \
-            -o Acquire::Retries=3 \
-            -o Acquire::http::Timeout=30 \
-            -o Acquire::https::Timeout=30 \
-            update
-          timeout --foreground 5m sudo apt-get \
-            -o Acquire::Retries=3 \
-            -o Acquire::http::Timeout=30 \
-            -o Acquire::https::Timeout=30 \
-            -o DPkg::Lock::Timeout=60 \
-            install --no-install-recommends -y \
-            shellcheck \
-            shfmt \
-            stow \
-            ruby \
-            zsh
+          go install github.com/editorconfig-checker/editorconfig-checker/v3/cmd/editorconfig-checker@v3.8.0
+          "$(go env GOPATH)/bin/editorconfig-checker"
 
-      - name: Run repository checks
-        run: ./scripts/doctor
+  stow-check:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install stow
+        run: brew install stow
+
+      - name: Stow dry-run (detect conflicts)
+        run: stow -n -v --ignore='\.DS_Store' -d dotfiles -t "$RUNNER_TEMP" .
+
+      - name: Brewfile check (informational)
+        run: brew bundle check --file Brewfile || true

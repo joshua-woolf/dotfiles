@@ -7,15 +7,20 @@ function hosts {
 }
 
 function kubeconfig {
-  code (Join-Path $HOME "\.kube\config")
+  code (Join-Path $HOME ".kube" "config")
 }
 
 function profile {
   code $PROFILE
 }
 
+function repos {
+  Set-Location (Join-Path $HOME "Repos")
+}
+
 function update {
-  /opt/homebrew/bin/brew update && /opt/homebrew/bin/brew upgrade
+  # Delegates to the zsh function so there is only one definition to maintain.
+  zsh -i -c update
   Update-Module -AcceptLicense
 }
 
