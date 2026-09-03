@@ -4,53 +4,53 @@ add_newline = false
 scan_timeout = 10
 
 format = """
-(fg:#1C0026)\
+(fg:#e6edf3 bg:#0d1117)\
 $shell\
-[\ue0b0](fg:#1C0026 bg:#29044D)\
+[\ue0b0](fg:#0d1117 bg:#161b22)\
 $directory\
-[\ue0b0](fg:#29044D bg:#391680)\
+[\ue0b0](fg:#161b22 bg:#21262d)\
 $kubernetes\
-[\ue0b0](fg:#391680 bg:#5545BF)\
+[\ue0b0](fg:#21262d bg:#30363d)\
 $git_branch\
 $git_status\
-[\ue0b0](fg:#5545BF bg:#6A5ACD)\
+[\ue0b0](fg:#30363d bg:#21262d)\
 $status\
-[\ue0b0](fg:#6A5ACD bg:#8A97ED)\
+[\ue0b0](fg:#21262d bg:#161b22)\
 $cmd_duration\
-[\ue0b0](fg:#8A97ED)
+[\ue0b0](fg:#161b22)
 """
 
 [cmd_duration]
-style = "italic fg:#000000 bg:#8A97ED"
+style = "italic fg:#7d8590 bg:#161b22"
 min_time = 1
 format = "[ $duration ]($style)"
 
 [directory]
-style = "fg:#CCCCCC bg:#29044D"
+style = "fg:#e6edf3 bg:#161b22"
 format = "[ $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
 
 [git_branch]
 symbol = "\uf418"
-style = "fg:#000000 bg:#5545BF"
-format = "[ $symbol $branch ]($style)"
+style = "fg:#e6edf3 bg:#30363d"
+format = "[ $symbol](fg:#58a6ff bg:#30363d)[ $branch ](fg:#e6edf3 bg:#30363d)"
 
 [git_status]
-style = "fg:#000000 bg:#5545BF"
-format = "[$all_status$ahead_behind ]($style)"
+style = "fg:#d29922 bg:#30363d"
+format = "[$all_status$ahead_behind ](fg:#d29922 bg:#30363d)"
 
 [kubernetes]
-style = "fg:#CCCCCC bg:#391680"
+style = "fg:#79c0ff bg:#21262d"
 disabled = false
 format = "[ $context(::$namespace) ]($style)"
 
 [shell]
-style = "fg:#CCCCCC bg:#1C0026"
+style = "fg:#e6edf3 bg:#0d1117"
 disabled = false
 format = "[ $indicator ]($style)"
 
 [status]
-style = "bold fg:#FFA500 bg:#6A5ACD"
+style = "bold fg:#f85149 bg:#21262d"
 disabled = false
 format = "[ $status ]($style)"

@@ -18,7 +18,7 @@ else
   compinit -C
 fi
 
-zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+zstyle ':completion:*' format $'\e[38;2;125;133;144mCompleting %d\e[0m'
 
 if command -v carapace >/dev/null 2>&1; then
   source <(carapace _carapace zsh)

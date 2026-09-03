@@ -1,5 +1,28 @@
 [color]
 	ui = true
+[color "branch"]
+	current = "#e6edf3 bold"
+	local = "#e6edf3"
+	remote = "#79c0ff"
+	upstream = "#3fb950"
+	plain = "#7d8590"
+[color "diff"]
+	meta = "#7d8590"
+	frag = "#d2a8ff"
+	context = "#8b949e"
+	func = "#79c0ff"
+	old = "#f85149"
+	new = "#3fb950"
+	commit = "#d29922"
+	whitespace = "#f85149 reverse"
+[color "status"]
+	header = "#79c0ff bold"
+	added = "#3fb950"
+	changed = "#d29922"
+	untracked = "#79c0ff"
+	branch = "#79c0ff"
+	nobranch = "#f85149"
+	unmerged = "#f85149"
 [pull]
 	rebase = true
 [filter "lfs"]

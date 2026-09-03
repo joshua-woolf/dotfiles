@@ -16,6 +16,10 @@ if command -v rg >/dev/null 2>&1; then
   export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 fi
 
+# GitHub Dark Default-inspired fzf colors. Keep any existing fzf options and
+# append only the palette so other picker behavior remains user-controlled.
+export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:-} --color=fg:#e6edf3,bg:#0d1117,hl:#58a6ff,fg+:#e6edf3,bg+:#21262d,hl+:#79c0ff,info:#7d8590,prompt:#58a6ff,pointer:#3fb950,marker:#3fb950,spinner:#d29922,header:#7d8590,border:#30363d"
+
 # Tool initialisation. fzf goes before atuin so atuin keeps ctrl-r and fzf keeps
 # ctrl-t / alt-c — whichever loads last wins the binding.
 # [-t 0] because fzf's keybindings need a terminal; without it `zsh -i -c ...`
