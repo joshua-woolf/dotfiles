@@ -20,7 +20,15 @@ function repos {
 
 function update {
   # Delegates to the zsh function so there is only one definition to maintain.
-  zsh -i -c update
+  $zsh = Get-Command zsh -ErrorAction SilentlyContinue
+  if ($null -eq $zsh) {
+    Write-Error "zsh is not installed."
+    return
+  }
+  & $zsh.Source -l -i -c update
+  if ($LASTEXITCODE -ne 0) {
+    throw "zsh update failed with exit code $LASTEXITCODE."
+  }
   Update-Module -AcceptLicense
 }
 
@@ -34,8 +42,15 @@ function Invoke-Starship-PreCommand {
   $host.ui.Write($prompt)
 }
 
-Invoke-Expression (&/opt/homebrew/bin/starship init powershell)
-Invoke-Expression (& { (zoxide init powershell | Out-String) })
+$starship = Get-Command starship -ErrorAction SilentlyContinue
+if ($null -ne $starship) {
+  Invoke-Expression (& $starship.Source init powershell)
+}
+
+$zoxide = Get-Command zoxide -ErrorAction SilentlyContinue
+if ($null -ne $zoxide) {
+  Invoke-Expression (& $zoxide.Source init powershell | Out-String)
+}
 
 $prompt = ""
 

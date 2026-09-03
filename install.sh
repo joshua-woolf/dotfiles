@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Idempotent bootstrap for this macOS work-machine dotfiles repo.
+# Idempotent bootstrap for this macOS home-machine dotfiles repo.
 # Safe to re-run: every step checks its own state and no-ops if already done.
 #
 # Usage: ./install.sh
@@ -9,7 +9,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-log()  { printf '\033[1;34m==>\033[0m %s\n' "$1"; }
+log() { printf '\033[1;34m==>\033[0m %s\n' "$1"; }
 skip() { printf '\033[2;37m  - %s\033[0m\n' "$1"; }
 
 if [[ "$(uname -s)" != "Darwin" ]]; then
@@ -27,13 +27,26 @@ install_rosetta() {
 }
 
 install_homebrew() {
+  local brew_bin
+
   log "Homebrew"
   if command -v brew >/dev/null 2>&1; then
     skip "already installed"
   else
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   fi
-  eval "$(/opt/homebrew/bin/brew shellenv)"
+
+  if command -v brew >/dev/null 2>&1; then
+    brew_bin="$(command -v brew)"
+  elif [[ -x /opt/homebrew/bin/brew ]]; then
+    brew_bin=/opt/homebrew/bin/brew
+  elif [[ -x /usr/local/bin/brew ]]; then
+    brew_bin=/usr/local/bin/brew
+  else
+    echo "Homebrew was installed but its executable could not be found." >&2
+    return 1
+  fi
+  eval "$("$brew_bin" shellenv)"
 }
 
 install_brew_bundle() {

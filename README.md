@@ -35,6 +35,12 @@ Re-apply the Stow symlinks after adding, moving or removing anything under
 ./stow.sh
 ```
 
+Run the local repository checks before committing changes:
+
+```shell
+./scripts/doctor
+```
+
 ## Aliases & functions
 
 Defined in [`dotfiles/.config/zsh/`](dotfiles/.config/zsh) and
@@ -46,20 +52,20 @@ Defined in [`dotfiles/.config/zsh/`](dotfiles/.config/zsh) and
 | --- | --- |
 | `nr <name>` | Scaffold a new repo from the template into `$REPOS_DIR` and open it. |
 | `update` | Update macOS, `mise`, Homebrew, and all local repos. |
-| `ugr` | Fetch + pull every git repo (and its worktrees) under `$REPOS_DIR`. |
+| `ugr` | Fetch + fast-forward every git repo (and its worktrees) under `$REPOS_DIR`, reporting failures. |
 | `drm` | Force-remove every docker container, then prune images, networks and volumes. |
 | `kc` | Interactive `kubectl` context picker (`fzf`). |
 | `clean` | Reclaim disk space: package-manager, editor, scanner and docker caches, plus tool versions and rust toolchains nothing references any more. |
 
-Common aliases include `g` (git), `k` (kubectl), `d`/`dc`/`dcu`/`dcd` (docker),
+Common aliases include `g` (git), `k` (kubectl), `d`/`dc`/`dcu`/`dcd` (Docker Compose),
 `v`/`home` (open in VS Code), and `repos` (cd to `$REPOS_DIR`).
 
 ### Git aliases
 
 | Alias | Description |
 | --- | --- |
-| `git gtm` | Go to `main`, prune, pull, clean, and delete branches whose upstream is gone. |
+| `git gtm` | Go to `main`, prune, fast-forward, and safely delete merged branches whose upstream is gone. |
 | `git l` | Compact one-line graph log. |
 | `git ld [n]` | Your commits from the last `n` days (default 1). |
-| `git u` | Fetch (prune) + prune worktrees + pull. |
+| `git u` | Fetch (prune) + prune worktrees + fast-forward pull. |
 | `git s` | Short status with branch info. |

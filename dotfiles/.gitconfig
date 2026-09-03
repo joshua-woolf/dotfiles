@@ -30,7 +30,7 @@
 [alias]
 	authors = !git log --format='%aN <%aE>' | grep -v 'users.noreply.github.com' | sort -u --ignore-case
 	contrib = shortlog --summary --numbered
-	gtm = "!git checkout main && git fetch --prune && git worktree prune && git pull && git clean -fd && git remote prune origin; git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -D"
+	gtm = "!git checkout main && git fetch --prune && git worktree prune && git pull --ff-only && git remote prune origin && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -r git branch -d"
 	l = log --graph --abbrev-commit --pretty=format:'%Cred%h%Creset %Cgreen%ad%Creset %s %C(blue)<%an>%Creset%C(yellow)%d%Creset' --date=short
 	ld = "!sh -c \"git log --since '${1:-1} days ago' --oneline --author $(git config user.email)\" -"
 	lm = log --pretty=format:'* %s (%h)'
@@ -38,4 +38,4 @@
 	rh = reset --hard HEAD
 	s = status -sb
 	tags = tag -l
-	u = "!git fetch --prune && git worktree prune && git pull"
+	u = "!git fetch --prune && git worktree prune && git pull --ff-only"
