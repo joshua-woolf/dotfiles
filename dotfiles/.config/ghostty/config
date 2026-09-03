@@ -14,7 +14,7 @@ keybind = super+f=new_split:down
 keybind = super+d=new_split:right
 macos-titlebar-proxy-icon = hidden
 macos-titlebar-style = native
-theme = aura
+theme = "GitHub Dark Default"
 title = " "
 window-height = 30
 window-padding-x = 5
