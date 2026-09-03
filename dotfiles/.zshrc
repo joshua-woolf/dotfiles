@@ -9,6 +9,13 @@ for _zsh_config in "$HOME"/.config/zsh/*.zsh(N); do
 done
 unset _zsh_config
 
+# Use ripgrep's Git-aware file list for fzf's file picker, including dotfiles
+# while excluding the Git metadata directory.
+if command -v rg >/dev/null 2>&1; then
+  export FZF_DEFAULT_COMMAND="rg --files --hidden --glob '!.git/**'"
+  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+fi
+
 # Tool initialisation. fzf goes before atuin so atuin keeps ctrl-r and fzf keeps
 # ctrl-t / alt-c — whichever loads last wins the binding.
 # [-t 0] because fzf's keybindings need a terminal; without it `zsh -i -c ...`
