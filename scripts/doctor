@@ -33,6 +33,10 @@ check_git_config() {
   git config --file "$SCRIPT_DIR/dotfiles/.gitconfig" --list >/dev/null
 }
 
+check_json_files() {
+  ruby -rjson -e 'ARGV.each { |path| JSON.parse(File.read(path)) }' "$@"
+}
+
 check_powershell_syntax() {
   # shellcheck disable=SC2016
   POWERSHELL_PROFILE="$SCRIPT_DIR/dotfiles/.config/powershell/Microsoft.PowerShell_profile.ps1" \
@@ -78,6 +82,9 @@ check "Bash syntax" bash -n "${shell_scripts[@]}"
 check "Zsh syntax" zsh -n "${zsh_files[@]}"
 if command -v ruby >/dev/null 2>&1; then
   check "Brewfile syntax" ruby -c "$SCRIPT_DIR/Brewfile"
+  check "VS Code settings JSON" check_json_files \
+    "$SCRIPT_DIR/dotfiles/Library/Application Support/Code/User/settings.json" \
+    "$SCRIPT_DIR/dotfiles/Library/Application Support/Code/User/keybindings.json"
 else
   skip "Ruby is not installed (Brewfile syntax unavailable)"
 fi

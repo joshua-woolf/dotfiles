@@ -24,7 +24,7 @@ cd "$REPOS_DIR/dotfiles"
 Update the Brewfile after installing/removing apps:
 
 ```shell
-brew bundle dump --file=Brewfile --force --formula --cask --tap --mas --no-describe
+brew bundle dump --file=Brewfile --force --formula --cask --tap --mas --vscode --no-describe
 ```
 
 Run `update` (see below) to keep the OS, apps, SDKs and local repos current.
@@ -41,6 +41,28 @@ Run the local repository checks before committing changes:
 ```shell
 ./scripts/doctor
 ```
+
+## VS Code
+
+VS Code user settings and keybindings are managed under
+[`dotfiles/Library/Application Support/Code/User/`](<dotfiles/Library/Application Support/Code/User>).
+Running `./stow.sh` links them into the macOS VS Code profile. Extension IDs are
+tracked as native `vscode` entries in [`Brewfile`](Brewfile), so `install.sh`
+restores them through Homebrew Bundle alongside the other applications.
+
+Refresh the Brewfile after installing or removing an extension:
+
+```shell
+brew bundle dump --file=Brewfile --force --formula --cask --tap --mas --vscode --no-describe
+```
+
+Extension versions are intentionally not pinned, so restoration installs the
+current Marketplace versions. `brew bundle cleanup --file=Brewfile` can remove
+installed extensions that are no longer declared, so review its list before
+confirming cleanup.
+
+If an existing Atuin config differs from the small repo-managed config, `stow.sh`
+leaves the existing file untouched and reports it instead of overwriting it.
 
 ## Aliases & functions
 

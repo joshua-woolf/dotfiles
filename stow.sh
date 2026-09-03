@@ -15,6 +15,31 @@ if ! command -v stow >/dev/null 2>&1; then
   exit 1
 fi
 
+migrate_vscode_files() {
+  local package_dir="${SCRIPT_DIR}/dotfiles/Library/Application Support/Code/User"
+  local target_dir="$HOME/Library/Application Support/Code/User"
+  local filename source target
+
+  [[ -d "$target_dir" ]] || return 0
+
+  # Move only exact copies of the files now managed by this checkout. A
+  # differing file is left untouched and reported as a Stow conflict below.
+  for filename in settings.json keybindings.json; do
+    source="${package_dir}/${filename}"
+    target="${target_dir}/${filename}"
+    if [[ -f "$target" && ! -L "$target" ]]; then
+      if cmp -s "$source" "$target"; then
+        printf '%s\n' "Migrating VS Code ${filename} to the dotfiles checkout"
+        rm -- "$target"
+      else
+        echo "Cannot stow VS Code ${filename}: existing file differs from the managed copy." >&2
+        echo "Back it up or merge it manually, then run ./stow.sh again." >&2
+        return 1
+      fi
+    fi
+  done
+}
+
 migrate_folded_config() {
   local current_target package_target
 
@@ -31,6 +56,16 @@ migrate_folded_config() {
   fi
 }
 
+stow_args=(--restow --no-folding --ignore='\.DS_Store')
+
 migrate_folded_config
+migrate_vscode_files
+if [[ -f "$HOME/.config/atuin/config.toml" && ! -L "$HOME/.config/atuin/config.toml" ]] &&
+  ! cmp -s \
+    "${SCRIPT_DIR}/dotfiles/.config/atuin/config.toml" \
+    "$HOME/.config/atuin/config.toml"; then
+  printf '%s\n' "Leaving divergent Atuin config user-managed: $HOME/.config/atuin/config.toml"
+  stow_args+=(--ignore='^\.config/atuin/config\.toml$')
+fi
 printf '\033[1;34m==>\033[0m %s\n' "Applying dotfiles with GNU Stow"
-cd "${SCRIPT_DIR}" && stow --restow --no-folding --ignore='\.DS_Store' -d dotfiles -t "$HOME" .
+cd "${SCRIPT_DIR}" && stow "${stow_args[@]}" -d dotfiles -t "$HOME" .
