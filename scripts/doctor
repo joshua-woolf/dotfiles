@@ -82,14 +82,13 @@ check "Bash syntax" bash -n "${shell_scripts[@]}"
 check "Zsh syntax" zsh -n "${zsh_files[@]}"
 if command -v ruby >/dev/null 2>&1; then
   check "Brewfile syntax" ruby -c "$SCRIPT_DIR/Brewfile"
-  check "VS Code settings JSON" check_json_files \
-    "$SCRIPT_DIR/dotfiles/Library/Application Support/Code/User/settings.json" \
-    "$SCRIPT_DIR/dotfiles/Library/Application Support/Code/User/keybindings.json"
+  check "JSON files parse" check_json_files \
+    "$SCRIPT_DIR/dotfiles/Library/Application Support/Code/User/settings.json"
 else
   skip "Ruby is not installed (Brewfile syntax unavailable)"
 fi
 check "Git config parses" check_git_config
-check "Git whitespace check" git -C "$SCRIPT_DIR" diff --check
+check "Git whitespace check" git -C "$SCRIPT_DIR" diff --check HEAD
 
 if command -v shellcheck >/dev/null 2>&1; then
   check "ShellCheck" shellcheck "${shell_scripts[@]}"

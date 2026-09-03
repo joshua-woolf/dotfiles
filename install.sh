@@ -8,8 +8,12 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CURRENT_STEP=""
 
-log() { printf '\033[1;34m==>\033[0m %s\n' "$1"; }
+log() {
+  CURRENT_STEP="$1"
+  printf '\033[1;34m==>\033[0m %s\n' "$1"
+}
 skip() { printf '\033[2;37m  - %s\033[0m\n' "$1"; }
 
 if [[ "$(uname -s)" != "Darwin" ]]; then
@@ -101,5 +105,15 @@ main() {
   configure_macos
   print_extras
 }
+
+# Under `set -e` a failed step exits silently, leaving a half-configured machine
+# with no indication of which step died. `log` records the current one.
+report_failure() {
+  local status=$?
+  [[ $status -eq 0 ]] && return 0
+  printf '\033[1;31m==>\033[0m %s\n' \
+    "Failed during: ${CURRENT_STEP:-startup} (exit ${status})" >&2
+}
+trap report_failure EXIT
 
 main "$@"

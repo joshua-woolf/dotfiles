@@ -37,33 +37,6 @@ function _run_if_available {
   fi
 }
 
-# Empty local and mounted-volume trash after an explicit confirmation.
-function emptytrash {
-  if ! _confirm "Permanently delete all trash and quarantine records?"; then
-    echo "Cancelled."
-    return 0
-  fi
-
-  local failed=0 quarantine_db
-  local -a volume_trash asl_logs quarantine_dbs
-  volume_trash=(/Volumes/*/.Trashes(N))
-  asl_logs=(/private/var/log/asl/*.asl(N))
-  quarantine_dbs=("$HOME"/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV*(N))
-
-  if (( ${#volume_trash} )); then
-    sudo rm -rfv -- "${volume_trash[@]}" || failed=1
-  fi
-  sudo rm -rfv -- "$HOME/.Trash" || failed=1
-  if (( ${#asl_logs} )); then
-    sudo rm -rfv -- "${asl_logs[@]}" || failed=1
-  fi
-  for quarantine_db in "${quarantine_dbs[@]}"; do
-    sqlite3 "$quarantine_db" 'delete from LSQuarantineEvent' || failed=1
-  done
-
-  return "$failed"
-}
-
 # Scaffold a new repo from the template into $REPOS_DIR and open it.
 function nr {
   local repo_name="${1:-}"
@@ -184,8 +157,38 @@ function ugr {
 # Interactive kubectl context picker.
 function kc {
   local context
+  if ! command -v kubectl >/dev/null 2>&1 || ! command -v fzf >/dev/null 2>&1; then
+    echo "kc needs both kubectl and fzf on PATH." >&2
+    return 1
+  fi
   context="$(kubectl config get-contexts -o name | fzf --height=40% --reverse --prompt='context> ')" \
     && [ -n "$context" ] && kubectl config use-context "$context"
+}
+
+# Empty the trash on every mounted volume and clear the quarantine history.
+function emptytrash {
+  if ! _confirm "Permanently delete the trash on all volumes and clear quarantine history?"; then
+    echo "Cancelled."
+    return 0
+  fi
+
+  # null_glob so an unmatched /Volumes or asl glob drops out instead of aborting
+  # the whole command, which is what the old single-line alias did.
+  setopt local_options null_glob
+  local failed=0
+  local -a quarantine_databases
+
+  sudo rm -rfv "$HOME/.Trash" /Volumes/*/.Trashes /private/var/log/asl/*.asl || failed=1
+
+  quarantine_databases=("$HOME"/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV*)
+  if (( ${#quarantine_databases} )); then
+    sqlite3 "${quarantine_databases[1]}" 'delete from LSQuarantineEvent' || failed=1
+  fi
+
+  if (( failed )); then
+    echo "Emptying the trash completed with failures." >&2
+    return 1
+  fi
 }
 
 # Reclaim disk space. The caches that actually hold gigabytes here are the ones

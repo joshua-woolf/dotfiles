@@ -44,7 +44,7 @@ Run the local repository checks before committing changes:
 
 ## VS Code
 
-VS Code user settings and keybindings are managed under
+VS Code user settings are managed under
 [`dotfiles/Library/Application Support/Code/User/`](<dotfiles/Library/Application Support/Code/User>).
 Running `./stow.sh` links them into the macOS VS Code profile. Extension IDs are
 tracked as native `vscode` entries in [`Brewfile`](Brewfile), so `install.sh`
@@ -61,9 +61,6 @@ current Marketplace versions. `brew bundle cleanup --file=Brewfile` can remove
 installed extensions that are no longer declared, so review its list before
 confirming cleanup.
 
-If an existing Atuin config differs from the small repo-managed config, `stow.sh`
-leaves the existing file untouched and reports it instead of overwriting it.
-
 ## Aliases & functions
 
 Defined in [`dotfiles/.config/zsh/`](dotfiles/.config/zsh) and
@@ -77,6 +74,7 @@ Defined in [`dotfiles/.config/zsh/`](dotfiles/.config/zsh) and
 | `update` | Update macOS, `mise`, Homebrew, and all local repos. |
 | `ugr` | Fetch + fast-forward every git repo (and its worktrees) under `$REPOS_DIR`, reporting failures. |
 | `drm` | Force-remove every docker container, then prune images, networks and volumes. |
+| `emptytrash` | Empty the trash on every mounted volume and clear the quarantine history. |
 | `kc` | Interactive `kubectl` context picker (`fzf`). |
 | `clean` | Reclaim disk space: package-manager, editor, scanner and docker caches, plus tool versions and rust toolchains nothing references any more. |
 

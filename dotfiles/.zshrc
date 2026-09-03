@@ -29,11 +29,10 @@ command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh)"
 # Homebrew zsh plugins (optional — guard so a fresh machine doesn't error).
 # These must come after every tool that adds a widget: zsh-syntax-highlighting
 # only wraps widgets that already exist when it loads, so it goes last of all.
-if command -v brew >/dev/null 2>&1; then
-  _brew_prefix="$(brew --prefix)"
-  [ -f "$_brew_prefix/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ] \
-    && source "$_brew_prefix/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
-  [ -f "$_brew_prefix/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ] \
-    && source "$_brew_prefix/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-  unset _brew_prefix
-fi
+# HOMEBREW_PREFIX comes from brew shellenv in .zprofile, so this costs no fork.
+_brew_prefix="${HOMEBREW_PREFIX:-/opt/homebrew}"
+[ -f "$_brew_prefix/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ] \
+  && source "$_brew_prefix/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+[ -f "$_brew_prefix/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ] \
+  && source "$_brew_prefix/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+unset _brew_prefix

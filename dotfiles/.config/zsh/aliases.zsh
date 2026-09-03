@@ -8,7 +8,6 @@ alias d="docker"
 alias dc="docker compose"
 alias dcu="docker compose up --build"
 alias dcd="docker compose down -v"
-alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
 alias g="git"
 alias grep='grep --color=auto'
 alias home='code "$HOME"'
