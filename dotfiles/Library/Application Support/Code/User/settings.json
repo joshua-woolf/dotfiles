@@ -1,37 +1,57 @@
 {
-  "editor.fontFamily": "Cascadia Code NF, Cascadia Code, Consolas, 'Courier New', monospace",
-  "redhat.telemetry.enabled": false,
-  "workbench.startupEditor": "none",
-  "terminal.integrated.fontFamily": "Cascadia Code NF",
-  "git.autofetch": true,
-  "editor.inlineSuggest.enabled": true,
-  "hediet.vscode-drawio.resizeImages": null,
-  "git.confirmSync": false,
-  "security.workspace.trust.untrustedFiles": "prompt",
-  "workbench.iconTheme": "bearded-icons",
-  "editor.fontLigatures": true,
-  "git.enableSmartCommit": false,
-  "explorer.confirmDelete": false,
-  "editor.formatOnSave": true,
-  "editor.mouseWheelZoom": true,
-  "shellformat.useEditorConfig": true,
-  "shellformat.path": "/opt/homebrew/bin/shfmt",
-  "terminal.integrated.fontSize": 14,
-  "debug.console.fontSize": 14,
-  "editor.fontSize": 14,
-  "chat.editor.fontSize": 14,
-  "security.promptForLocalFileProtocolHandling": true,
+  "[go]": {
+    "editor.defaultFormatter": "golang.go",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    }
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features",
+    "files.insertFinalNewline": true
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[powershell]": {
+    "editor.defaultFormatter": "ms-vscode.powershell"
+  },
+  "[proto]": {
+    "editor.defaultFormatter": "bufbuild.vscode-buf",
+    "editor.formatOnSave": true
+  },
+  "[opentofu][opentofu-vars]": {
+    "editor.defaultFormatter": "opentofu.vscode-opentofu",
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file"
+  },
+  "[rust]": {
+    "editor.defaultFormatter": "rust-lang.rust-analyzer",
+    "editor.formatOnSave": true
+  },
+  "[shellscript][dockerfile][dotenv][ignore][properties][hosts]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "[toml]": {
+    "editor.defaultFormatter": "tamasfe.even-better-toml"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "Vue.volar"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
   "buf.commandLine.path": "/opt/homebrew/bin/buf",
-  "opentofu.languageServer.tofu.path": "/Users/joshuaw/.local/share/mise/installs/opentofu/latest/tofu",
-  "go.alternateTools": {
-    "gopls": "/opt/homebrew/bin/gopls",
-    "dlv": "/opt/homebrew/bin/dlv"
-  },
-  "powershell.powerShellAdditionalExePaths": {
-    "PowerShell 7 (mise)": "/Users/joshuaw/.local/share/mise/installs/powershell/latest/pwsh"
-  },
-  "powershell.powerShellDefaultVersion": "PowerShell 7 (mise)",
-  "files.insertFinalNewline": true,
+  "chat.disableAIFeatures": true,
+  "chat.editor.fontSize": 14,
+  "debug.console.fontSize": 14,
+  "editor.fontFamily": "Cascadia Code NF, Cascadia Code, Consolas, 'Courier New', monospace",
+  "editor.fontLigatures": true,
+  "editor.fontSize": 14,
+  "editor.formatOnSave": true,
+  "editor.inlineSuggest.enabled": true,
+  "editor.mouseWheelZoom": true,
+  "explorer.confirmDelete": false,
   "explorer.fileNesting.patterns": {
     "*.ts": "${capture}.js",
     "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",
@@ -53,7 +73,31 @@
     "*.sdb": "${capture}.${extname}-*",
     "*.s3db": "${capture}.${extname}-*"
   },
-  "chat.disableAIFeatures": true,
+  "files.insertFinalNewline": true,
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "git.enableSmartCommit": false,
+  "go.alternateTools": {
+    "gopls": "/opt/homebrew/bin/gopls",
+    "dlv": "/opt/homebrew/bin/dlv"
+  },
+  "hediet.vscode-drawio.resizeImages": null,
+  "markdown.preview.fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif",
+  "opentofu.languageServer.tofu.path": "/Users/joshuaw/.local/share/mise/installs/opentofu/latest/tofu",
+  "powershell.powerShellAdditionalExePaths": {
+    "PowerShell 7 (mise)": "/Users/joshuaw/.local/share/mise/installs/powershell/latest/pwsh"
+  },
+  "powershell.powerShellDefaultVersion": "PowerShell 7 (mise)",
+  "redhat.telemetry.enabled": false,
+  "security.promptForLocalFileProtocolHandling": true,
+  "security.workspace.trust.untrustedFiles": "prompt",
+  "shellformat.path": "/opt/homebrew/bin/shfmt",
+  "shellformat.useEditorConfig": true,
+  "terminal.integrated.fontFamily": "Cascadia Code NF",
+  "terminal.integrated.fontSize": 14,
+  "workbench.colorTheme": "GitHub Dark Default",
+  "workbench.iconTheme": "bearded-icons",
+  "workbench.startupEditor": "none",
   "yaml.disableSchemaDetection": [
     "**/.gitea/workflows/*.yml",
     "**/.gitea/workflows/*.yaml",
@@ -61,49 +105,5 @@
     "**/.forgejo/workflows/*.yaml",
     "**/.github/workflows/*.yml",
     "**/.github/workflows/*.yaml"
-  ],
-  "markdown.preview.fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif",
-  "workbench.colorTheme": "GitHub Dark Default",
-  "[json]": {
-    "editor.defaultFormatter": "vscode.json-language-features",
-    "files.insertFinalNewline": true
-  },
-  "[jsonc]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
-  },
-  "[shellscript][dockerfile][dotenv][ignore][properties][hosts]": {
-    "editor.defaultFormatter": "foxundermoon.shell-format"
-  },
-  "[yaml]": {
-    "editor.defaultFormatter": "redhat.vscode-yaml"
-  },
-  "[toml]": {
-    "editor.defaultFormatter": "tamasfe.even-better-toml"
-  },
-  "[vue]": {
-    "editor.defaultFormatter": "Vue.volar"
-  },
-  "[proto]": {
-    "editor.defaultFormatter": "bufbuild.vscode-buf",
-    "editor.formatOnSave": true
-  },
-  "[go]": {
-    "editor.defaultFormatter": "golang.go",
-    "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": {
-      "source.organizeImports": "explicit"
-    }
-  },
-  "[powershell]": {
-    "editor.defaultFormatter": "ms-vscode.powershell"
-  },
-  "[opentofu][opentofu-vars]": {
-    "editor.defaultFormatter": "opentofu.vscode-opentofu",
-    "editor.formatOnSave": true,
-    "editor.formatOnSaveMode": "file"
-  },
-  "[rust]": {
-    "editor.defaultFormatter": "rust-lang.rust-analyzer",
-    "editor.formatOnSave": true
-  }
+  ]
 }
