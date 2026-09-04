@@ -1,0 +1,23 @@
+d4s:
+  refreshRate: 2
+  apiServerTimeout: 120s
+  readOnly: false
+  defaultContext: rancher-desktop
+  defaultView: ""
+  noExitOnCtrlC: false
+  ui:
+    enableMouse: false
+    headless: false
+    logoless: false
+    crumbsless: false
+    invert: false
+    skin: github-dark
+  skipLatestRevCheck: false
+  logger:
+    tail: 100
+    sinceSeconds: -1
+    textWrap: false
+    disableAutoscroll: false
+    showTime: false
+  shellPod:
+    image: ghcr.io/jr-k/nget:latest

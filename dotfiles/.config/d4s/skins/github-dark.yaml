@@ -1,0 +1,65 @@
+# -----------------------------------------------------------------------------
+# GitHub Dark Default skin for d4s.
+#
+# The same palette as the k9s skin, so the Docker and Kubernetes TUIs match.
+# Selected by d4s.ui.skin in ../config.yaml.
+# -----------------------------------------------------------------------------
+
+# Styles...
+foreground: &foreground "#e6edf3"
+muted: &muted "#7d8590"
+background: &background "#0d1117"
+raised: &raised "#21262d"
+border: &border "#30363d"
+blue: &blue "#58a6ff"
+blue_bright: &blue_bright "#79c0ff"
+blue_emphasis: &blue_emphasis "#1f6feb"
+green: &green "#3fb950"
+yellow: &yellow "#d29922"
+purple: &purple "#bc8cff"
+purple_light: &purple_light "#d2a8ff"
+red: &red "#f85149"
+
+# Skin definition
+d4s:
+  # General body styles.
+  body:
+    fgColor: *foreground
+    bgColor: *background
+    logoColor: *blue
+    logoShadowColor: *border
+  # Frame styles (borders, titles, crumbs, status indicators).
+  frame:
+    border:
+      fgColor: *border
+    crumbs:
+      fgColor: *foreground
+      bgColor: *raised
+    title:
+      fgColor: *foreground
+      highlightColor: *blue_emphasis
+      filterColor: *purple_light
+      titleColor: *blue_bright
+      scopeColor: *purple
+    menu:
+      keyColor: *blue_bright
+    # Resource status and indicator styles.
+    status:
+      errorColor: *red
+      infoColor: *green
+      pendingColor: *blue_bright
+      warnColor: *yellow
+      highlightColor: *purple_light
+      completedColor: *muted
+      dimColor: *muted
+      purpleColor: *purple
+      blueColor: *blue
+  # View-specific styles.
+  views:
+    table:
+      cursorFgColor: *foreground
+      cursorBgColor: *raised
+      markColor: *yellow
+      header:
+        fgColor: *muted
+        focusColor: *blue_bright

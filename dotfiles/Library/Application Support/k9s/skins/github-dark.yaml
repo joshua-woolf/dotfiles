@@ -1,0 +1,150 @@
+# -----------------------------------------------------------------------------
+# GitHub Dark Default skin for k9s.
+#
+# Same palette as the Ghostty theme, starship, fzf, git and zsh, so k9s reads as
+# part of the terminal rather than a separate app. Selected by k9s.ui.skin in
+# ../config.yaml; per-context skins such as production-red still override it.
+# -----------------------------------------------------------------------------
+
+# Styles...
+foreground: &foreground "#e6edf3"
+muted: &muted "#7d8590"
+background: &background "#0d1117"
+surface: &surface "#161b22"
+raised: &raised "#21262d"
+border: &border "#30363d"
+blue: &blue "#58a6ff"
+blue_bright: &blue_bright "#79c0ff"
+blue_emphasis: &blue_emphasis "#1f6feb"
+cyan: &cyan "#39c5cf"
+green: &green "#3fb950"
+yellow: &yellow "#d29922"
+purple: &purple "#bc8cff"
+purple_light: &purple_light "#d2a8ff"
+red: &red "#f85149"
+string: &string "#a5d6ff"
+
+# Skin...
+k9s:
+  # General K9s styles.
+  body:
+    fgColor: *foreground
+    bgColor: *background
+    logoColor: *blue
+    logoColorMsg: *foreground
+    logoColorInfo: *green
+    logoColorWarn: *yellow
+    logoColorError: *red
+  # Command prompt styles.
+  prompt:
+    fgColor: *foreground
+    bgColor: *background
+    suggestColor: *muted
+    border:
+      command: *blue
+      default: *border
+  # ClusterInfoView styles.
+  info:
+    fgColor: *blue_bright
+    sectionColor: *foreground
+    cpuColor: *green
+    memColor: *green
+    k9sRevColor: *muted
+  # Help panel styles.
+  help:
+    fgColor: *foreground
+    bgColor: *surface
+    keyColor: *blue_bright
+    numKeyColor: *purple_light
+    sectionColor: *muted
+  # Dialog styles.
+  dialog:
+    fgColor: *foreground
+    bgColor: *surface
+    buttonFgColor: *foreground
+    buttonBgColor: *raised
+    buttonFocusFgColor: *foreground
+    buttonFocusBgColor: *blue_emphasis
+    labelFgColor: *yellow
+    fieldFgColor: *foreground
+  frame:
+    # Border styles.
+    border:
+      fgColor: *border
+      focusColor: *blue
+    menu:
+      fgColor: *foreground
+      keyColor: *blue_bright
+      # Used for favorite namespaces.
+      numKeyColor: *purple_light
+    # CrumbView attributes for history navigation.
+    crumbs:
+      fgColor: *foreground
+      bgColor: *raised
+      activeColor: *blue_emphasis
+    # Resource status and update styles.
+    status:
+      newColor: *cyan
+      modifyColor: *blue_bright
+      addColor: *green
+      pendingColor: *yellow
+      errorColor: *red
+      highlightColor: *purple_light
+      killColor: *muted
+      completedColor: *muted
+    # Border title styles.
+    title:
+      fgColor: *foreground
+      bgColor: *surface
+      highlightColor: *yellow
+      counterColor: *blue_bright
+      filterColor: *purple_light
+  views:
+    # Charts styles.
+    charts:
+      bgColor: *background
+      defaultDialColors:
+        - *green
+        - *red
+      defaultChartColors:
+        - *green
+        - *red
+    # TableView attributes.
+    table:
+      fgColor: *foreground
+      bgColor: *background
+      cursorFgColor: *foreground
+      cursorBgColor: *raised
+      markColor: *yellow
+      # Header row styles.
+      header:
+        fgColor: *muted
+        bgColor: *background
+        sorterColor: *blue
+        selectedSortColumnColor: *blue_bright
+    # Xray view attributes.
+    xray:
+      fgColor: *foreground
+      bgColor: *background
+      cursorColor: *raised
+      cursorTextColor: *foreground
+      graphicColor: *blue
+    # Context picker styles.
+    picker:
+      mainColor: *foreground
+      focusColor: *blue
+      shortcutColor: *purple_light
+    # YAML info styles.
+    yaml:
+      keyColor: *blue_bright
+      colonColor: *muted
+      valueColor: *string
+    # Logs styles.
+    logs:
+      fgColor: *foreground
+      bgColor: *background
+      indicator:
+        fgColor: *foreground
+        bgColor: *raised
+        toggleOnColor: *green
+        toggleOffColor: *muted
